@@ -9,7 +9,9 @@ angular.module('toolmgr.instances', ['ngRoute', 'ngResource'])
  */
 .factory('ToolInstance', [ '$resource', function($resource) {
   // TODO: How to handle "maps" with $resource?
-  return $resource('/toolserver/instances/:toolPath', { toolPath:'@toolPath' });
+  return $resource('/toolserver/instances/:id', { id:'@id' }, {}, {
+    stripTrailingSlashes: false
+  });
 }])
 
 /**
@@ -54,9 +56,7 @@ angular.module('toolmgr.instances', ['ngRoute', 'ngResource'])
     /* Creates a new ToolInstance from the template */
     instances.create = function(template) {
       var newInstance = new ToolInstance(instances.template);
-      newInstance.toolPath = Tools.selected;
-      
-      debugger;
+      newInstance.id = Tools.selected;
       
       newInstance.$save(function() {
         $log.debug('Successfully created ToolInstance:' + template.name);
@@ -85,6 +85,8 @@ angular.module('toolmgr.instances', ['ngRoute', 'ngResource'])
     
     /* Deletes an existing ToolInstance */
     instances.delete = function(instance) {
+      
+      debugger;
       instance.$delete(function() {
         $log.debug('Successfully deleted ToolInstance:' + instance.name);
       }, function() {

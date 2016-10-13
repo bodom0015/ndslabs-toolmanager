@@ -97,7 +97,7 @@ class ToolInstance(restful.Resource):
         print "CONTAINER ID: ", containerID
 
         # Do data transfer to container
-        xferCmd = '/usr/local/bin/clowder-xfer '+str(args['dataset'])+' '+str(args['datasetId'])+' '+str(args['key'])+' '+cfg['dataPath']+' '+containerID
+        xferCmd = '/usr/local/bin/clowder-xfer.sh '+str(args['dataset'])+' '+str(args['datasetId'])+' '+str(args['key'])+' '+cfg['dataPath']+' '+containerID
         os.popen(xferCmd).read().rstrip()
 
         # Start the requested tool container
@@ -141,7 +141,7 @@ class ToolInstance(restful.Resource):
         containerID = str(args['id'])
 
         # Do data transfer container in another container
-        xferCmd = 'docker run --rm -i --volumes-from '+str(args['id'])+' craigwillis/toolserver:latest /usr/local/bin/clowder-xfer '+str(args['dataset'])+' '+str(args['datasetId'])+' '+str(args['key'])+' '+config[toolPath]['dataPath']
+        xferCmd = 'docker run --rm -i --volumes-from '+str(args['id'])+' craigwillis/toolserver:latest /usr/local/bin/clowder-xfer.sh '+str(args['dataset'])+' '+str(args['datasetId'])+' '+str(args['key'])+' '+config[toolPath]['dataPath']
         os.popen(xferCmd).read().rstrip()
 
 
