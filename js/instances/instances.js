@@ -9,17 +9,7 @@ angular.module('toolmgr.instances', ['ngRoute', 'ngResource'])
  */
 .factory('ToolInstance', [ '$resource', function($resource) {
   // TODO: How to handle "maps" with $resource?
-  return $resource('/toolserver/instances/:id', { id:'@id' }, {}, {
-    stripTrailingSlashes: false
-  });
-}])
-
-/**
- * Configure "ToolInstance" REST API Client
- */
-.factory('Instances', [ '$resource', function($resource) {
-  // TODO: How to handle "maps" as $resource?
-  return $resource('/toolserver/instances', {});
+  return $resource('/api/instances/:id', { id:'@id' });
 }])
 
 /**
@@ -36,8 +26,8 @@ angular.module('toolmgr.instances', ['ngRoute', 'ngResource'])
 /**
  * The controller for our "ToolInstances" view
  */
-.controller('ToolInstancesCtrl', [ '$log', '$routeParams', 'Instances', 'ToolInstance', 'Tools',
-        function($log, $routeParams, Instances, ToolInstance, Tools) {
+.controller('ToolInstancesCtrl', [ '$log', '$routeParams', 'ToolInstance', 'Tools',
+        function($log, $routeParams, ToolInstance, Tools) {
     var instances = this;
     
     /* Tool parameters */
@@ -47,6 +37,7 @@ angular.module('toolmgr.instances', ['ngRoute', 'ngResource'])
     /* API parameters */
     instances.template.key = $routeParams['key'] || '';
     instances.template.ownerId = $routeParams['ownerId'] || '';
+    instances.template.source = $routeParams['source'] || '';
     
     /* Dataset parameters */
     instances.template.datasetName = $routeParams['datasetName'] || '';
@@ -56,7 +47,7 @@ angular.module('toolmgr.instances', ['ngRoute', 'ngResource'])
     /* Creates a new ToolInstance from the template */
     instances.create = function(template) {
       var newInstance = new ToolInstance(instances.template);
-      newInstance.id = Tools.selected;
+      newInstance.toolPath = Tools.selected;
       
       newInstance.$save(function() {
         $log.debug('Successfully created ToolInstance:' + template.name);
@@ -67,7 +58,7 @@ angular.module('toolmgr.instances', ['ngRoute', 'ngResource'])
     
     /* Retrieves the list of ToolInstances */
     (instances.retrieve = function() {
-      instances.list = Instances.get({ ownerId: $routeParams['ownerId'] || '' }, function() {
+      instances.list = ToolInstance.get({ ownerId: $routeParams['ownerId'] || '' }, function() {
         $log.debug('Successfully populated ToolInstances!');
       }, function() {
         $log.error('Failed populating ToolInstances!');
@@ -85,8 +76,6 @@ angular.module('toolmgr.instances', ['ngRoute', 'ngResource'])
     
     /* Deletes an existing ToolInstance */
     instances.delete = function(instance) {
-      
-      debugger;
       instance.$delete(function() {
         $log.debug('Successfully deleted ToolInstance:' + instance.name);
       }, function() {

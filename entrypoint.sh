@@ -11,7 +11,8 @@ if [ "$1" = "toolserver" ]; then
 
    nginx &
 
-   toolserver.py
+   toolserver.py & 
+   sleep infinity
 else
    exec "$@"
 fi

@@ -8,7 +8,7 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', 'toolmgr.instances' ])
  * Configure "Toolbox" REST API Client
  */
 .factory('Tool', [ '$resource', function($resource) {
-  return $resource('/toolserver/tools', {});
+  return $resource('/api/tools', {});
 }])
 
 /**
