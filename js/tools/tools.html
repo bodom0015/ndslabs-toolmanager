@@ -2,22 +2,52 @@
 
 <div ng-controller="ToolInstancesCtrl as instances">
     <form ng-submit="instances.create(instances.template)">
-        
-        Tool:
-        <select ng-options="key as tool.name for (key, tool) in tools.list track by key"
+      
+      <div class="form-group">  
+        <label for="toolKeySelect">Choose Tool to Launch</label>
+        <select name="toolKeySelect" id="toolKeySelect" ng-options="key as tool.name for (key, tool) in tools.list track by key"
                 ng-model="tools.selected" >
-        </select><br/>
+        </select>
+      </div>
         
-        Name: <input ng-model="instances.template.name" /><br/>
+      <div class="form-group"> 
+        <label for="nameInput">Name</label>
+        <input class="form-control" name="nameInput" id="nameInput" ng-model="instances.template.name" />
+      </div>
             
-        API Key: <input ng-model="instances.template.key" /><br/>
-        Owner Id: <input ng-model="instances.template.ownerId" /><br/>
-        Source: <input ng-model="instances.template.source" /><br/>
-        Dataset Id: <input ng-model="instances.template.datasetId" /><br/>
-        Dataset Name: <input ng-model="instances.template.datasetName" /><br/>
-        Dataset Download URL: <input ng-model="instances.template.dataset" />
+      <div class="form-group"> 
+        <label for="apiKeyInput">API Key</label>
+        <input class="form-control" name="apiKeyInput" id="apiKeyInput" type="hidden" ng-model="instances.template.key" />
+      </div>
+      
+      <div class="form-group"> 
+        <label for="ownerIdInput">Owner Id</label>
+        <input class="form-control" name="ownerIdInput" id="ownerIdInput" type="hidden" ng-model="instances.template.ownerId" />
+      </div>
+      
+      <div class="form-group"> 
+        <label for="sourceInput">Source</label>
+        <input class="form-control" name="sourceInput" id="sourceInput" type="hidden" ng-model="instances.template.source" />
+      </div>
+      
+      <div class="form-group"> 
+        <label for="datasetIdInput">Dataset Id</label>
+        <input class="form-control" name="datasetIdInput" id="datasetIdInput" type="hidden" ng-model="instances.template.datasetId" />
+      </div>
+      
+      <div class="form-group"> 
+        <label for="datasetNameInput">Dataset Name</label>
+        <input class="form-control" name="datasetNameInput" id="datasetNameInput" type="hidden" ng-model="instances.template.datasetName" />
+      </div>
+      
+      <div class="form-group"> 
+        <label for="datasetUrlInput">Dataset URL</label>
+        <input class="form-control" name="datasetUrlInput" id="datasetUrlInput" type="hidden" ng-model="instances.template.dataset" />
+      </div>
+      
+      <button ng-click="instances.create(instances.template)">Create</button>
     </form>
-    <button ng-click="instances.create(instances.template)">Create</button>
+    
 </div>
 
 <pre>{{ instances.template | json }}</pre>
