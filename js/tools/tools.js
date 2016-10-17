@@ -124,6 +124,13 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
     
     /* Attach a new dataset to an existing ToolInstance */
     $scope.updateInstance = function(id, instance, template) {
+      if (!id) {
+        $log.error("Bad id: " + id + " on instance " + instance);
+        return;
+      }
+      
+      $log.debug('Updating instance: '+ id);
+      
       if (MOCK) {
         $scope.instances.list[id].uploadHistory.push({
           url: template.dataset,
@@ -152,6 +159,8 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
         return;
       }
       
+      $log.debug('Deleting instance: '+ id);
+      
       if (MOCK) {
         delete $scope.instances.list[id];
         return;
@@ -163,15 +172,6 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
       }, function(response) {
         $log.error('Failed deleting ToolInstance:' + id);
       });
-      
-      /*delete instance[id];
-      
-      instance.$save(function() {
-        $log.debug('Successfully deleted ToolInstance:' + id);
-        $scope.retrieveInstances();
-      }, function() {
-        $log.error('Failed deleting ToolInstance:' + id);
-      });*/
     };
     
     /* Retrieve the list of Tools */
