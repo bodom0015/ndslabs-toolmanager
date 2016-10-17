@@ -7,7 +7,7 @@
       </legend>
       
       <!-- These are all scraped from the route parameters -->
-      <div class="form-group"> 
+      <!--<div class="form-group"> 
         <label for="apiKeyInput">API Key</label>
         {{ instances.template.key }}
         <input class="form-control" name="apiKeyInput" id="apiKeyInput" type="hidden" ng-model="instances.template.key" />
@@ -29,7 +29,7 @@
         <label for="datasetIdInput">Dataset Id</label>
         {{ instances.template.datasetId }}
         <input class="form-control" name="datasetIdInput" id="datasetIdInput" type="hidden" ng-model="instances.template.datasetId" />
-      </div>
+      </div>-->
       
       <div class="form-group">  
         <label for="datasetNameInput">Dataset Name</label>
@@ -39,7 +39,7 @@
       
       <div class="form-group"> 
         <label for="datasetUrlInput">Dataset URL</label>
-        {{ instances.template.dataset }}
+        <a ng-href="{{ instances.template.dataset }}">{{ instances.template.dataset }}</a>
         <input class="form-control" name="datasetUrlInput" id="datasetUrlInput" type="hidden" ng-model="instances.template.dataset" />
       </div>
       
@@ -96,7 +96,6 @@
         </div>
       </div>
     </fieldset>
-    
   </div>
 </div>
 
@@ -106,21 +105,21 @@
     <table class="table">
       <thead>
         <tr>
-          <th width="20%">Name</th>
-          <th width="20%">Tool</th>
-          <th width="20%">ID</th>
+          <th width="30%">Name</th>
+          <th width="30%">Tool</th>
           <th width="30%">Datasets</th>
+          <!--<th width="30%">ID</th>-->
           <th width="10%">Stop</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="(id, instance) in instances.list track by id">
-          <td><a ng-href="{{ instance.url }}">{{ instance.name }}</a></td>
+          <td><a ng-href="{{ instance.url }}" target="_blank">{{ instance.name }}</a></td>
           <td>{{ instance.toolName }}</td>
-          <td>{{ id | limitTo:10 }}...</td>
+          <!--<td>{{ id }}...</td>-->
           <td>
             <ul>
-              <li ng-repeat="upload in instance.uploadHistory"><a ng-href="{{ upload.url }}">{{ upload.datasetName }} ({{ upload.datasetId }})</a></li>
+              <li ng-repeat="upload in instance.uploadHistory"><a ng-href="{{ upload.url }}">{{ upload.datasetName }}</a></li>
             </ul>
           </td>
           <td><button class="btn btn-xs btn-danger" ng-click="deleteInstance(id, instance)"><i class="fa fa-fw fa-stop"></i></button></td>
