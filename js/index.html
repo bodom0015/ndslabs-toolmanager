@@ -6,50 +6,64 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>ToolManager UI</title>
+  <title>NDS Analysis Toolbox</title>
+  
   <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+  <link rel="shortcut icon" type="image/x-icon" href="asset/favicon-16x16.png" />
+    
+  <!-- Import stylesheets -->
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="app.css">
+  
+  <!-- Import third-party javascript -->
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <!--<ul class="menu">
-    <li><a href="#!/tools">Tools</a></li>
-    <li><a href="#!/instances">Instances</a></li>
-    <li><a href="#!/logs">Logs</a></li>
-  </ul>-->
   
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Brand</a>
-      </div>
+  <div class="container-fluid">
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-brand cursor-pointer">
+            <!-- Draw the brand logo -->
+            <a href="#/" class="undecorate-link">
+              <img id="navBrandLogo" src="asset/favicon-32x32.png" alt="NDS" height="32" width="32"> Analysis Toolbox</sup>
+            </a>
+          </div>
+        </div>
+    
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="#!/tools">Tools</a></li>
+            <!--<li><a href="#!/instances">Instances <span ng-if="" class="sr-only">(current)</span></a></li>-->
+            <!--<li><a href="#!/logs">Logs <span ng-if="" class="sr-only">(current)</span></a></li>-->
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
   
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li ng-class="{ 'active':  }"><a href="#!/tools">Tools <span ng-if="" class="sr-only">(current)</span></a></li>
-          <li><a href="#!/instances">Instances <span ng-if="" class="sr-only">(current)</span></a></li>
-          <li><a href="#!/logs">Logs <span ng-if="" class="sr-only">(current)</span></a></li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-
-  <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-  <![endif]-->
-
-  <div ng-view class="container"></div>
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+  
+    <div class="container" ng-view></div>
+  </div>
+  
 
   <!-- AngularJS + official modules -->
   <script src="bower_components/angular/angular.js"></script>
@@ -58,8 +72,8 @@
   
   <!-- ToolManager app -->
   <script src="app.js"></script>
-  <script src="instances/instances.js"></script>
+  <!-- <script src="instances/instances.js"></script> -->
   <script src="tools/tools.js"></script>
-  <script src="logs/logs.js"></script>
+  <!-- <script src="logs/logs.js"></script> -->
 </body>
 </html>

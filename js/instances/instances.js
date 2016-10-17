@@ -26,8 +26,8 @@ angular.module('toolmgr.instances', ['ngRoute', 'ngResource'])
 /**
  * The controller for our "ToolInstances" view
  */
-.controller('ToolInstancesCtrl', [ '$log', '$routeParams', 'ToolInstance', 'Tools',
-        function($log, $routeParams, ToolInstance, Tools) {
+.controller('ToolInstancesCtrl', [ '$log', '$location', '$routeParams', 'ToolInstance', 'Tools',
+        function($log, $location, $routeParams, ToolInstance, Tools) {
     var instances = this;
     
     /* Tool parameters */
@@ -45,7 +45,7 @@ angular.module('toolmgr.instances', ['ngRoute', 'ngResource'])
     instances.template.dataset = $routeParams['dataset'] || '';
     
     /* Creates a new ToolInstance from the template */
-    instances.create = function(template) {
+    instances.createInstance = function(tool, template) {
       var newInstance = new ToolInstance(instances.template);
       newInstance.toolPath = Tools.selected;
       
@@ -56,8 +56,8 @@ angular.module('toolmgr.instances', ['ngRoute', 'ngResource'])
       });
     };
     
-    /* Retrieves the list of ToolInstances */
-    (instances.retrieve = function() {
+    /* Retrieves the list of existing ToolInstances */
+    (instances.retrieveInstances = function() {
       instances.list = ToolInstance.get({ ownerId: $routeParams['ownerId'] || '' }, function() {
         $log.debug('Successfully populated ToolInstances!');
       }, function() {
@@ -65,8 +65,9 @@ angular.module('toolmgr.instances', ['ngRoute', 'ngResource'])
       });
     })();
     
-    /* Updates an existing ToolInstance */
-    instances.update = function(instance) {
+    /* Add a new dataset to an existing ToolInstance */
+    instances.updateInstance = function(id, instance, template) {
+      debugger;
       instance.$save(function() {
         $log.debug('Successfully saved ToolInstance:' + instance.name);
       }, function() {
@@ -75,11 +76,18 @@ angular.module('toolmgr.instances', ['ngRoute', 'ngResource'])
     };
     
     /* Deletes an existing ToolInstance */
-    instances.delete = function(instance) {
-      instance.$delete(function() {
-        $log.debug('Successfully deleted ToolInstance:' + instance.name);
+    instances.deleteInstance = function(id, instance) {
+      if (!id) {
+        $log.error("Bad id: " + id + " on instance " + instance);
+        return;
+      }
+      
+      delete instance[id];
+      
+      instance.$save(function() {
+        $log.debug('Successfully deleted ToolInstance:' + id);
       }, function() {
-        $log.error('Failed deleting ToolInstance:' + instance.name);
+        $log.error('Failed deleting ToolInstance:' + id);
       });
     };
 }]);

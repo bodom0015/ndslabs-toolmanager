@@ -1,55 +1,116 @@
-<h2>Launch Tool Instance</h2>
-
-<div ng-controller="ToolInstancesCtrl as instances">
-    <form ng-submit="instances.create(instances.template)">
-      
-      <div class="form-group">  
-        <label for="toolKeySelect">Choose Tool to Launch</label>
-        <select name="toolKeySelect" id="toolKeySelect" ng-options="key as tool.name for (key, tool) in tools.list track by key"
-                ng-model="tools.selected" >
-        </select>
-      </div>
-        
-      <div class="form-group"> 
-        <label for="nameInput">Name</label>
-        <input class="form-control" name="nameInput" id="nameInput" ng-model="instances.template.name" />
-      </div>
-            
-      <div class="form-group"> 
-        <label for="apiKeyInput">API Key</label>
-        <input class="form-control" name="apiKeyInput" id="apiKeyInput" type="hidden" ng-model="instances.template.key" />
-      </div>
-      
-      <div class="form-group"> 
-        <label for="ownerIdInput">Owner Id</label>
-        <input class="form-control" name="ownerIdInput" id="ownerIdInput" type="hidden" ng-model="instances.template.ownerId" />
-      </div>
-      
-      <div class="form-group"> 
-        <label for="sourceInput">Source</label>
-        <input class="form-control" name="sourceInput" id="sourceInput" type="hidden" ng-model="instances.template.source" />
-      </div>
-      
-      <div class="form-group"> 
-        <label for="datasetIdInput">Dataset Id</label>
-        <input class="form-control" name="datasetIdInput" id="datasetIdInput" type="hidden" ng-model="instances.template.datasetId" />
-      </div>
-      
-      <div class="form-group"> 
-        <label for="datasetNameInput">Dataset Name</label>
-        <input class="form-control" name="datasetNameInput" id="datasetNameInput" type="hidden" ng-model="instances.template.datasetName" />
-      </div>
-      
-      <div class="form-group"> 
-        <label for="datasetUrlInput">Dataset URL</label>
-        <input class="form-control" name="datasetUrlInput" id="datasetUrlInput" type="hidden" ng-model="instances.template.dataset" />
-      </div>
-      
-      <button ng-click="instances.create(instances.template)">Create</button>
-    </form>
+<div>
+  <h4>Launch a New Tool Instance</h4>
+  <fieldset class="border-nds" ng-if="instances.template.dataset">
+    <legend class="legend-fix">
+      Target Dataset 
+      <sup><i class="fa fa-fw fa-question-circle-o" data-toggle="tooltip" data-placement="right" title="Details about the dataset on which you plan to operate"></i></sup>
+    </legend>
     
+    <!-- These are all scraped from the route parameters -->
+    <div class="form-group"> 
+      <label for="apiKeyInput">API Key</label>
+      {{ instances.template.key }}
+      <input class="form-control" name="apiKeyInput" id="apiKeyInput" type="hidden" ng-model="instances.template.key" />
+    </div>
+    
+    <div class="form-group"> 
+      <label for="ownerIdInput">Owner Id</label>
+      {{ instances.template.ownerId }}
+      <input class="form-control" name="ownerIdInput" id="ownerIdInput" type="hidden" ng-model="instances.template.ownerId" />
+    </div>
+    
+    <div class="form-group"> 
+      <label for="sourceInput">Source</label>
+      {{ instances.template.source }}
+      <input class="form-control" name="sourceInput" id="sourceInput" type="hidden" ng-model="instances.template.source" />
+    </div>
+    
+    <div class="form-group"> 
+      <label for="datasetIdInput">Dataset Id</label>
+      {{ instances.template.datasetId }}
+      <input class="form-control" name="datasetIdInput" id="datasetIdInput" type="hidden" ng-model="instances.template.datasetId" />
+    </div>
+    
+    <div class="form-group">  
+      <label for="datasetNameInput">Dataset Name</label>
+      {{ instances.template.datasetName }}
+      <input class="form-control" name="datasetNameInput" id="datasetNameInput" type="hidden" ng-model="instances.template.datasetName" />
+    </div>
+    
+    <div class="form-group"> 
+      <label for="datasetUrlInput">Dataset URL</label>
+      {{ instances.template.dataset }}
+      <input class="form-control" name="datasetUrlInput" id="datasetUrlInput" type="hidden" ng-model="instances.template.dataset" />
+    </div>
+    
+    
+       
+    <form>
+      <div class="form-group"> 
+        <label for="nameInput">
+          Tool Instance Name 
+          <i class="fa fa-fw fa-question-circle-o" data-toggle="tooltip" data-placement="right" title="Name this instance to easily identify it later"></i>
+        </label>
+        
+        <div class="input-group">
+          <input class="form-control" name="nameInput" id="nameInput" placeholder="Name your instance..." ng-model="instances.template.name" />
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Launch Tool <span class="caret"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li ng-repeat="(key, tool) in tools track by key" data-toggle="tooltip" data-placement="right" title="{{ tool.description }}">
+                <a href ng-click="instances.create(tool, instances.template)">{{ tool.name }}</a>
+              </li>
+            </ul>
+          </div><!-- /input-group-btn -->
+        </div><!-- /input-group -->
+      </div>    
+            
+      <!-- TODO: Error handling for route scraping -->
+    </form>
+  </fieldset>
+       
+  <form>
+    <div class="form-group"> 
+      <label for="nameInput">
+        Tool Instance Name 
+        <i class="fa fa-fw fa-question-circle-o" data-toggle="tooltip" data-placement="right" title="Name this instance to easily identify it later"></i>
+      </label>
+      
+      <div class="input-group">
+        <input class="form-control" name="nameInput" id="nameInput" placeholder="Name your instance..." ng-model="instances.template.name" />
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Launch Tool <span class="caret"></span></button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li ng-repeat="(key, tool) in tools track by key" data-toggle="tooltip" data-placement="right" title="{{ tool.description }}">
+              <a href ng-click="instances.create(tool, instances.template)">{{ tool.name }}</a>
+            </li>
+          </ul>
+        </div><!-- /input-group-btn -->
+      </div><!-- /input-group -->
+    </div>    
+          
+    <!-- TODO: Error handling for route scraping -->
+  </form>
 </div>
 
-<pre>{{ instances.template | json }}</pre>
-
-<!-- <pre>{{ tools.list | json }}</pre> -->
+<div ng-if="instances.list">
+  <h4>My Analysis Environments</h4>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th width="30%">ID</th>
+          <th width="60%">Name</th>
+          <th width="10%">Stop</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="(id, instance) in instances.list track by id">
+          <td>{{ id }}</td>
+          <td>{{ instance.name }}</td>
+          <td><button class="btn btn-xs btn-danger" ng-click="deleteInstance(id, instance)"><i class="fa fa-fw fa-stop"></i></button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
