@@ -28,6 +28,6 @@ angular.module('toolmgr', [
  */ 
 .config(['$locationProvider', '$logProvider', '$routeProvider', function($locationProvider, $logProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
-  $logProvider.debugEnabled(false);
+  $logProvider.debugEnabled(true);
   $routeProvider.otherwise({redirectTo: '/tools'});
 }]);

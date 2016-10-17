@@ -1,8 +1,0 @@
-<h2>My Tool Instances</h2>
-<pre>{{ instances.list | json }}</pre>
-<ul>
-    <li ng-repeat="(id, instance) in instances.list">
-        <pre>{{ instance | json }}</pre>
-        <button ng-click="instances.deleteInstance(id, instance)">Delete</button>
-    </li>
-</ul>
