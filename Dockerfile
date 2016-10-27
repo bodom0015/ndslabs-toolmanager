@@ -5,13 +5,6 @@
 
 FROM ubuntu:xenial
 
-# Managed Data Tools
-COPY data /usr/local/data/
-
-# ToolManager API
-COPY api /usr/local/bin/
-COPY entrypoint.sh /entrypoint.sh
-
 # Install nginx / Node.js / npm
 RUN apt-get -qq update && \
     apt-get -qq install \
@@ -62,5 +55,10 @@ RUN set -x \
      
 ENV TOOLSERVER_PORT 8083
 EXPOSE 8082
+
+COPY data /usr/local/data/
+COPY api /usr/local/bin/
+COPY entrypoint.sh /entrypoint.sh
+
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["toolserver"]

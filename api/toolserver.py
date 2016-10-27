@@ -44,6 +44,7 @@ logging.basicConfig(level=logging.DEBUG)
 PORTNUM = os.getenv('TOOLSERVER_PORT', "8083")
 configPath = "/usr/local/data/toolconfig.json"
 instancesPath = "/usr/local/data/instances.json"
+metadataPath = "/usr/local/data/metadata.json"
 templatesPath = "/usr/local/data/templates/"
 
 """Allow remote user to get contents of logs for container"""
@@ -273,6 +274,26 @@ class Instance(restful.Resource):
 
         return 204
 
+class Metadata(restful.Resource):
+
+    def post(self):
+        logging.debug("Metadata.post")
+
+        # Read known metadata into memory
+	metadata = readMetadata()
+
+        # Check for existing metadata for this id
+        
+
+        # Merge in new metadata from this request
+        json_data = request.get_json(force=True)
+        
+        # Export new metadata store back out to disk
+	writeMetadata(metadata)
+
+
+        return json_data, 201
+
 # Main class for tool definitions, pulling necessary config vars from toolconfig.json
 class Toolbox(restful.Resource):
 
@@ -386,9 +407,26 @@ def reloadNginx():
     cmd = 'nginx -s reload'
     os.popen(cmd).read().rstrip()
 
+# Read metadata
+def readMetadata(path=metadataPath):
+    logging.debug("readMetadata " + path)
+    mdFile = open(path)
+    metadataJson = templFile.read()
+    mdFile.close()
+    return metadataJson
+
+# Write current metadata store to file
+def writeMetadata(path=metadataPath):
+    logging.debug("writeMetadata " + path)
+    mdFile = open(path, 'w')
+    mdFile.write(json.dumps(metadata))
+    mdFile.close()
+    return
+
 # Initialize tool configuration and load any instance data from previous runs
 config = getConfig()
 instanceAttrs = getInstanceAttrsFromFile()
+metadata = readMetadata()
 
 # ENDPOINTS ----------------
 # /tools will fetch summary of available tools that can be launched
@@ -400,6 +438,10 @@ api.add_resource(Instances, '/instances')
 # /instances/id fetches details of a particular instance, including URL, owner, history, etc.
 # /instances/toolPath 
 api.add_resource(Instance, '/instances/<string:id>')
+
+
+# TEST: New path for receiving POSTed metadata from other sites
+api.add_resource(Metadata, '/metadata')
 
 # /logs should return docker logs for the requested container
 api.add_resource(DockerLog, '/logs/<string:id>')
