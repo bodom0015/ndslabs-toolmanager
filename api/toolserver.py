@@ -282,15 +282,18 @@ class Metadata(restful.Resource):
         # Read known metadata into memory
 	metadata = readMetadata()
 
-        # Check for existing metadata for this id
-        
-
-        # Merge in new metadata from this request
+        # Parse POST body into JSON
         json_data = request.get_json(force=True)
         
+        # Check for existing metadata for this id
+        metadataId = int(json_data['id'])
+
+        # TODO: Merge new data with previous, if any existed
+
+        metadata[metadataId] = json_data['metadata'];
+
         # Export new metadata store back out to disk
 	writeMetadata(metadata)
-
 
         return json_data, 201
 
@@ -411,15 +414,15 @@ def reloadNginx():
 def readMetadata(path=metadataPath):
     logging.debug("readMetadata " + path)
     mdFile = open(path)
-    metadataJson = templFile.read()
+    metadataJson = mdFile.read()
     mdFile.close()
-    return metadataJson
+    return json.loads(metadataJson)
 
 # Write current metadata store to file
-def writeMetadata(path=metadataPath):
+def writeMetadata(data, path=metadataPath):
     logging.debug("writeMetadata " + path)
     mdFile = open(path, 'w')
-    mdFile.write(json.dumps(metadata))
+    mdFile.write(json.dumps(data))
     mdFile.close()
     return
 

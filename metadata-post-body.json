@@ -1,7 +1,7 @@
 {
-  "hostname": "http://test-hostname.com",
+  "id": 123,
   "metadata": {
-    "location": "url",
+    "location": "http://test-hostname.com",
     "tmpnb-url": "url2"
   }
 }

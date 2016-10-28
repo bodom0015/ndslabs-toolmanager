@@ -57,8 +57,9 @@ ENV TOOLSERVER_PORT 8083
 EXPOSE 8082
 
 COPY data /usr/local/data/
-COPY api /usr/local/bin/
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["toolserver"]
+
+COPY api /usr/local/bin/
