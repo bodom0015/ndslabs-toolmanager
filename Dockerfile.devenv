@@ -1,0 +1,6 @@
+FROM craigwillis/cloud9-python
+
+RUN apt-get -qq update && apt-get -qq install nginx
+RUN pip install flask flask_restful arrow jinja2
+
+

@@ -42,10 +42,10 @@ get_parser.add_argument('source')       # Source application
 logging.basicConfig(level=logging.DEBUG)
 # TODO: Move these parameters somewhere else?
 PORTNUM = os.getenv('TOOLSERVER_PORT', "8083")
-configPath = "/usr/local/data/toolconfig.json"
-instancesPath = "/usr/local/data/instances.json"
-metadataPath = "/usr/local/data/metadata.json"
-templatesPath = "/usr/local/data/templates/"
+configPath = "./data/toolconfig.json"
+instancesPath = "./data/instances.json"
+metadataPath = "./data/metadata.json"
+templatesPath = "./data/templates/"
 
 """Allow remote user to get contents of logs for container"""
 class DockerLog(restful.Resource):
@@ -275,25 +275,34 @@ class Instance(restful.Resource):
         return 204
 
 class Metadata(restful.Resource):
-
+    def get(self):
+        logging.debug("Metadata.get")
+        metadata = readMetadata()
+        return metadata, 200
+    
     def post(self):
         logging.debug("Metadata.post")
 
         # Read known metadata into memory
-	metadata = readMetadata()
+        metadata = readMetadata()
 
         # Parse POST body into JSON
         json_data = request.get_json(force=True)
         
-        # Check for existing metadata for this id
-        metadataId = int(json_data['id'])
-
-        # TODO: Merge new data with previous, if any existed
-
-        metadata[metadataId] = json_data['metadata'];
+        logging.debug(json_data)
+        
+        if type(json_data) is dict:
+            addDataset(json_data['id'], json_data['metadata'])
+        elif type(json_data) is list:
+            logging.debug(json_data)
+            for dataset in json_data:
+                addDataset(dataset['id'], dataset['metadata'])
+        else:
+            logging.error("Unexpected POST body encountered: " + type(json_data))
+            return
 
         # Export new metadata store back out to disk
-	writeMetadata(metadata)
+        writeMetadata(metadata)
 
         return json_data, 201
 
@@ -326,6 +335,19 @@ class Toolbox(restful.Resource):
     def put(self):
         logging.debug("Toolbox.put")
         return 200
+        
+        
+def addDataset(id, dataset): 
+    # Check for existing metadata for this id
+    metadataId = str(id)
+
+    # Merge new data with previous, if any existed
+    if metadataId in metadata:
+        metadata[metadataId] = metadata[metadataId].copy().update(dataset)
+    else:
+        metadata[metadataId] = dataset
+    
+    return None
 
 # Get configured tools from json file
 def getConfig(path=configPath):
@@ -414,15 +436,16 @@ def reloadNginx():
 def readMetadata(path=metadataPath):
     logging.debug("readMetadata " + path)
     mdFile = open(path)
-    metadataJson = mdFile.read()
+    jsonData = mdFile.read()
     mdFile.close()
-    return json.loads(metadataJson)
+    return json.loads(jsonData)
 
 # Write current metadata store to file
 def writeMetadata(data, path=metadataPath):
-    logging.debug("writeMetadata " + path)
+    jsonData = json.dumps(data)
+    logging.debug("writeMetadata " + jsonData + " -> " + path)
     mdFile = open(path, 'w')
-    mdFile.write(json.dumps(data))
+    mdFile.write(jsonData)
     mdFile.close()
     return
 
@@ -442,9 +465,8 @@ api.add_resource(Instances, '/instances')
 # /instances/toolPath 
 api.add_resource(Instance, '/instances/<string:id>')
 
-
-# TEST: New path for receiving POSTed metadata from other sites
-api.add_resource(Metadata, '/metadata')
+# /datasets is for querying and updating dataset metadata from other sites
+api.add_resource(Metadata, '/datasets')
 
 # /logs should return docker logs for the requested container
 api.add_resource(DockerLog, '/logs/<string:id>')
