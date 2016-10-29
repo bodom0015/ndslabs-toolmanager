@@ -173,6 +173,7 @@ class Resolver(restful.Resource):
         
         # Parse the string response into JSON
         auth = json.loads(auth)
+        logging.debug(auth)
         
         logging.debug("Token: " +  auth['authToken']['token'])
         
@@ -187,13 +188,13 @@ class Resolver(restful.Resource):
         
         # TODO: Send proper POST body?
         notebook = requests.post(intermediate_url, data=data, headers=headers).text
-        logging.debug(notebook)
         
         # Parse the string response into JSON
         notebook = json.loads(notebook)
+        logging.debug(notebook)
         
         # Example response:
-        # {/user/fXJxgykVoLJg/tree
+        # {
         #   "_accessLevel": 2,
         #   "_id": "58142ff5bd2af0000156de87",
         #   "_modelType": "notebook",
@@ -208,6 +209,9 @@ class Resolver(restful.Resource):
         #   "when": "2016-10-29T05:13:14.142929+00:00"
         # }
         #
+        
+        if containerPath not in notebook:
+            return notebook['message'], 500
         
         # TODO: Retrieve and return notebook URL
         #return notebook, 201

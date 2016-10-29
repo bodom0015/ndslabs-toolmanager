@@ -51,7 +51,7 @@ COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["resolver"]
 
-# Install npm / bower dependencies + ToolMaanger UI
+# Install npm / bower dependencies + ToolManager UI
 COPY js/package.json js/bower.json /usr/share/nginx/html/
 RUN cd /usr/share/nginx/html/ && \
     npm install -g bower && \
