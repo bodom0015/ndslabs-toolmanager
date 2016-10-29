@@ -44,8 +44,8 @@ logging.basicConfig(level=logging.DEBUG)
 PORTNUM = os.getenv('TOOLSERVER_PORT', "8083")
 configPath = "./data/toolconfig.json"
 instancesPath = "./data/instances.json"
-metadataPath = "./data/metadata.json"
 templatesPath = "./data/templates/"
+
 
 """Allow remote user to get contents of logs for container"""
 class DockerLog(restful.Resource):
@@ -274,36 +274,6 @@ class Instance(restful.Resource):
 
         return 204
 
-class Metadata(restful.Resource):
-    def get(self):
-        logging.debug("Metadata.get")
-        metadata = readMetadata()
-        return metadata, 200
-    
-    def post(self):
-        logging.debug("Metadata.post")
-
-        # Read known metadata into memory
-        metadata = readMetadata()
-
-        # Parse POST body into JSON
-        json_data = request.get_json(force=True)
-        logging.debug(metadata)
-        
-        if type(json_data) is dict:
-            addDataset(json_data['id'], json_data['metadata'])
-        elif type(json_data) is list:
-            for dataset in json_data:
-                addDataset(dataset['id'], dataset['metadata'])
-        else:
-            logging.error("Unexpected POST body encountered: " + type(json_data))
-            return
-
-        # Export new metadata store back out to disk
-        writeMetadata()
-
-        return json_data, 201
-
 # Main class for tool definitions, pulling necessary config vars from toolconfig.json
 class Toolbox(restful.Resource):
 
@@ -334,32 +304,6 @@ class Toolbox(restful.Resource):
         logging.debug("Toolbox.put")
         return 200
         
-        
-def addDataset(id, dataset): 
-    # Check for existing metadata for this id
-    # Merge new data with previous, if any existed
-    if str(id) in metadata:
-        metadata[str(id)] = str(id).copy().update(dataset)
-    else:
-        metadata[str(id)] = dataset
-    
-    return None
-
-# Read metadata from file
-def readMetadata(path=metadataPath):
-    logging.debug("readMetadata " + path)
-    mdFile = open(path)
-    metadataJson = mdFile.read()
-    mdFile.close()
-    return json.loads(metadataJson)
-
-# Write current metadata store to file
-def writeMetadata(path=metadataPath):
-    logging.debug("writeMetadata " + path)
-    mdFile = open(path, 'w')
-    mdFile.write(json.dumps(metadata))
-    mdFile.close()
-    return
 
 # Get configured tools from json file
 def getConfig(path=configPath):
@@ -447,7 +391,6 @@ def reloadNginx():
 # Initialize tool configuration and load any instance data from previous runs
 config = getConfig()
 instanceAttrs = getInstanceAttrsFromFile()
-metadata = readMetadata()
 
 # ENDPOINTS ----------------
 # /tools will fetch summary of available tools that can be launched
@@ -460,8 +403,6 @@ api.add_resource(Instances, '/instances')
 # /instances/toolPath 
 api.add_resource(Instance, '/instances/<string:id>')
 
-# /datasets is for querying and updating dataset metadata from other sites
-api.add_resource(Metadata, '/datasets')
 
 # /logs should return docker logs for the requested container
 api.add_resource(DockerLog, '/logs/<string:id>')
