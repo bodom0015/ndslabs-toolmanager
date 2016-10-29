@@ -10,7 +10,6 @@ from flask import Flask, request
 from flask_restful import reqparse, abort, Api, Resource
 from jinja2 import Template
 
-
 import requests
 from requests.auth import HTTPBasicAuth
 
@@ -20,9 +19,42 @@ from toolserver import *
 app = Flask(__name__) 
 api = restful.Api(app)
 
+id_parser = reqparse.RequestParser()
+id_parser.add_argument('id')
+
+post_parser = reqparse.RequestParser()
+post_parser.add_argument('name')        # human-readable name to refer to instance for displaying running list
+post_parser.add_argument('dataset')     # Dataset download URL e.g. "http://0.0.0.0:9000/clowder/api/datasets/<ds_id>/download"
+post_parser.add_argument('datasetId')   # Dataset ID separate from full path, for generating upload history
+post_parser.add_argument('datasetName') # Dataset name for generating upload history
+post_parser.add_argument('key')         # API key
+post_parser.add_argument('ownerId')     # UUID of user who is creating this instance
+post_parser.add_argument('source')      # Source application
+
+put_parser = reqparse.RequestParser()
+put_parser.add_argument('id')           # tool containerID to upload dataset into
+put_parser.add_argument('dataset')      # Dataset download URL e.g. "http://0.0.0.0:9000/clowder/api/datasets/<ds_id>/download"
+put_parser.add_argument('datasetId')    # Dataset ID separate from full path, for generating upload history
+put_parser.add_argument('datasetName')  # Dataset name for generating upload history
+put_parser.add_argument('key')          # API key
+put_parser.add_argument('uploaderId')   # UUID of user who is uploading this dataset
+put_parser.add_argument('source')       # Source application
+
+get_parser = reqparse.RequestParser()
+get_parser.add_argument('id')
+get_parser.add_argument('ownerId')      # UUID of user who created the instance
+get_parser.add_argument('source')       # Source application
+
+logging.basicConfig(level=logging.DEBUG)
+# TODO: Move these parameters somewhere else?
 PORTNUM = os.getenv('TOOLSERVER_PORT', "8083")
-basePath = '/usr/local'
-metadataPath = basePath + '/data/metadata.json'
+configPath = "./data/toolconfig.json"
+instancesPath = "./data/instances.json"
+templatesPath = "./data/templates/"
+
+
+PORTNUM = os.getenv('TOOLSERVER_PORT', "8083")
+metadataPath = "./data/metadata.json"
 metadata = {}
 
 class Metadata(restful.Resource):
@@ -213,6 +245,10 @@ def writeMetadata(path=metadataPath):
 
 metadata = readMetadata()
 
+# Initialize tool configuration and load any instance data from previous runs
+config = getConfig()
+instanceAttrs = getInstanceAttrsFromFile()
+
 # ENDPOINTS ----------------
 # /tools will fetch summary of available tools that can be launched
 api.add_resource(Toolbox, '/tools') 
@@ -238,4 +274,5 @@ api.add_resource(Resolver, '/resolve/<string:id>')
 # ----------------------------
 
 if __name__ == '__main__':
+    writeNginxConf()
     app.run(host="0.0.0.0", port=int(PORTNUM), debug=True)
