@@ -106,6 +106,12 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
       });
     })();
     
+    $scope.selectedMetadata = null;
+    
+    $scope.viewMetadata = function(metadata) {
+      $scope.selectedMetadata = metadata;
+    };
+    
     Datasets.get({ /* request parameters go here */ }, function(datasets) {
       $scope.datasets = datasets;
       $log.debug("Successful GET from /datasets!");

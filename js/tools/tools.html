@@ -14,11 +14,8 @@
       <tbody>
         <tr ng-repeat="(id, metadata) in datasets">
           <td><a ng-href="http://{{ metadata['girder_api_host'] }}:{{ metadata['girder_api_port'] }}" target="_blank">{{ id }}</a></td>
-          
-          <td><button type="button" class="btn btn-info btn-xs"  ng-click="viewMetadata=metadata"><i class="fa fa-fw fa-code"></i></button></td>
-          
+          <td><button type="button" class="btn btn-info btn-xs"  ng-click="viewMetadata(metadata)"><i class="fa fa-fw fa-code"></i></button></td>
           <td><button class="btn btn-xs btn-default" ng-click="resolve(id)"><i class="fa fa-fw fa-play"></i></button></td>
-          
           <td><a class="btn btn-xs btn-primary" ng-href="{{ metadata['tool_url'] }}" ng-if="{{ metadata['tool_url'] }}" target="_blank"><i class="fa fa-fw fa-external-link-square"></i></a></td>
         </tr>
       </tbody>
@@ -27,10 +24,10 @@
   </div>
 </div>
 
-<div class="alert alert-info" ng-if="viewMetadata">
-  <pre>{{ viewMetadata | json }}</pre>
+<div class="alert alert-info" ng-if="selectedMetadata">
+  <button class="btn btn-xs btn-default" ng-click="viewMetadata(null)"><i class="fa fa-fw fa-times"></i></button>
+  <pre>{{ selectedMetadata | json }}</pre>
 </div>
-
 
 <div class="row" ng-if="'false'">
   <div class="col-sm-offset-1 col-sm-8">
