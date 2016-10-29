@@ -211,7 +211,12 @@ class Resolver(restful.Resource):
         
         # TODO: Retrieve and return notebook URL
         #return notebook, 201
-        return redirect(girder_proxy_uri + notebook['containerPath'], code=302)
+        
+        tool_url = girder_proxy_uri + notebook['containerPath']
+        
+        logging.debug(tool_url)
+        
+        return redirect(tool_url, code=302)
             
 def getMetadata(id):
     metadata = readMetadata()
