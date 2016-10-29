@@ -7,7 +7,7 @@
 <button class="btn btn-lg btn-primary" ng-click="resolve('test1')">Test Remote Dataset 1</button>
 <button class="btn btn-lg btn-primary" ng-click="resolve('test2')">Test Remote Dataset 2</button>
 
-<a ng-href="{{ tool.url }}" ng-if="tool.url">Go to Tool!</a>
+<a ng-href="{{ tool.url }}" ng-if="tool.url" target="_blank">Go to Tool!</a>
 
 <pre ng-if="tool">{{ tool | json }}</pre>
 

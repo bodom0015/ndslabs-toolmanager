@@ -124,7 +124,7 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
         $scope.tool = response.data;
         
         if (response.status == 302 && response.data.url) {
-          $window.open(response.data.url);
+          $window.open(response.data.url, '_blank');
           return;
         }
         
