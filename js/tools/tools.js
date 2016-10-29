@@ -16,8 +16,6 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
 
 /**
  * Configure "ToolInstance" REST API Client
- * 
- * POST /tools => Lanch a new tool locally
  */
 .factory('ToolInstance', [ '$resource', function($resource) {
   // TODO: How to handle "maps" with $resource?
@@ -26,21 +24,19 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
 
 /**
  * Configure "Toolbox" REST API Client
- * 
- * GET /tools => Retrieve the list of tools launchable locally
  */
 .factory('Tool', [ '$resource', function($resource) {
   return $resource('/api/tools', {});
 }])
 
 /**
- * Configure "Resolve" REST API Client
+ * Configure "Launch" REST API Client
  * 
  * GET /resolve/<string:id> => lookup metadata about a given id (this is the same as GET /datasets?id<string:id>)
  * POST /resolve/<string:id> => lookup metadata about a given id, then use this metadata to launch a notebook next to the data
  */
-.factory('Resolve', [ '$resource', function($resource) {
-  return $resource('/resolve/:id', {});
+.factory('Launch', [ '$resource', function($resource) {
+  return $resource('/api/resolve/:id', {});
 }])
 
 /**
@@ -59,7 +55,7 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
  * NOTE: all other fields on POST body will be ignored
  */
 .factory('Datasets', [ '$resource', function($resource) {
-  return $resource('/datasets', {});
+  return $resource('/api/datasets', {});
 }])
 
 /**
@@ -87,8 +83,8 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
 /**
  * The controller for our "Toolbox" view
  */
-.controller('ToolCtrl', [ '$log', '$scope', '$routeParams', '$http', 'MOCK', 'Tools', 'Instances', 'ToolInstance', 'Tool', 'Datasets', 'Resolve',
-      function($log, $scope, $routeParams, $http, MOCK, Tools, Instances, ToolInstance, Tool, Datasets, Resolve) {
+.controller('ToolCtrl', [ '$log', '$scope', '$routeParams', '$http', 'MOCK', 'Tools', 'Instances', 'ToolInstance', 'Tool', 
+      function($log, $scope, $routeParams, $http, MOCK, Tools, Instances, ToolInstance, Tool) {
     $scope.instances = {};
     
     ($scope.resetForm = function() {
@@ -110,21 +106,6 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
         delete $routeParams[key];
       });
     })();
-    
-    $scope.datasets = Datasets.query({ /* request parameters go here */ }, function() {
-      $log.debug("Successful GET from /datasets!");
-    }, function() {
-      $log.debug("Failed GET from /datasets!");
-    });
-    
-    $scope.testResolve = function() {
-      Resolve.save({ /* request parameters go here */ }, { /* POST body goes here */ }, function(notebook) {
-        $scope.notebook = notebook
-        $log.debug("Successful POST to /resolve!");
-      }, function() {
-        $log.debug("Failed POST to /resolve!");
-      });
-    };
     
     var nextId = 1;
     
