@@ -121,12 +121,17 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
       console.debug(response);
     });
     
+    $scope.resolving = {};
     $scope.resolve = function(id, dataset) {
+      $scope.resolving[id] = true;
       Resolve.get({ id:id }, { /* POST body goes here */ }, function(tool) {
+       
+        $scope.resolving[id] = false;
         $scope.tool = tool;
         
         $log.debug("Successful GET to /resolve!");
       }, function(response) {
+        $scope.resolving[id] = false;
         $scope.tool = response.data;
         
         if (response.status == 302 && response.data.url) {
