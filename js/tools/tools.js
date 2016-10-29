@@ -83,8 +83,8 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
 /**
  * The controller for our "Toolbox" view
  */
-.controller('ToolCtrl', [ '$log', '$scope', '$routeParams', '$http', 'MOCK', 'Tools', 'Instances', 'ToolInstance', 'Tool', 'Datasets', 'Resolve',
-      function($log, $scope, $routeParams, $http, MOCK, Tools, Instances, ToolInstance, Tool, Datasets, Resolve) {
+.controller('ToolCtrl', [ '$log', '$scope', '$window', '$routeParams', '$http', 'MOCK', 'Tools', 'Instances', 'ToolInstance', 'Tool', 'Datasets', 'Resolve',
+      function($log, $scope, $window, $routeParams, $http, MOCK, Tools, Instances, ToolInstance, Tool, Datasets, Resolve) {
     $scope.instances = {};
     
     ($scope.resetForm = function() {
@@ -110,16 +110,20 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
     Datasets.get({ /* request parameters go here */ }, function(datasets) {
       $scope.datasets = datasets;
       $log.debug("Successful GET from /datasets!");
-    }, function() {
-      $log.debug("Failed GET from /datasets!");
+    }, function(response) {
+      $log.debug("Failed GET from /datasets:");
+      $log.debug(response);
+      console.debug(response);
     });
     
     $scope.resolve = function(id, dataset) {
       Resolve.save({ id:id }, { /* POST body goes here */ }, function(tool) {
         $scope.tool = tool;
         $log.debug("Successful POST to /resolve!");
-      }, function() {
-        $log.debug("Failed POST to /resolve!");
+      }, function(response) {
+        $log.debug("Failed POST to /resolve:");
+        $log.debug(response);
+        console.debug(response);
       });
     };
     
