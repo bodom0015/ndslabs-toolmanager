@@ -3,6 +3,7 @@
 import os, json
 import arrow
 import logging
+import requests
 import subprocess
 import flask_restful as restful
 from flask import Flask, request
@@ -69,14 +70,39 @@ class Metadata(restful.Resource):
 class Resolver(restful.Resource):
     def get(self, id):
         logging.debug("Resolver.get")
+        return getMetadata(id)
+
+    def post(self, id):
+        logging.debug("Resolver.post")
+        
         metadata = readMetadata()
         
         val = metadata[str(id)]
         
-        if val is not None:
-            return val, 200
-        else:
+        if val is None:
             return "Key not found", 404
+    
+    
+        # TODO: Authenticate
+    
+        # TODO: Parameterize hostname / port?
+        # TODO Send proper request data
+        logging.debug(requests.post('http://141.142.208.142:8080/api/v1/notebook', data = {'key':'value'}))
+        
+        # TODO: Retrieve and return notebook URL
+            
+        return
+            
+def getMetadata(id):
+    metadata = readMetadata()
+    
+    val = metadata[str(id)]
+    
+    if val is None:
+        return "Key not found", 404
+        
+    return val, 200
+        
         
 def addDataset(id, dataset): 
     # Check for existing metadata for this id
