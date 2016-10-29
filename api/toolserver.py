@@ -42,9 +42,10 @@ get_parser.add_argument('source')       # Source application
 logging.basicConfig(level=logging.DEBUG)
 # TODO: Move these parameters somewhere else?
 PORTNUM = os.getenv('TOOLSERVER_PORT', "8083")
-configPath = "./data/toolconfig.json"
-instancesPath = "./data/instances.json"
-templatesPath = "./data/templates/"
+basePath = '/usr/local'
+configPath = basePath + '/data/toolconfig.json'
+instancesPath = basePath + '/data/instances.json'
+templatesPath = basePath + '/data/templates/'
 
 
 """Allow remote user to get contents of logs for container"""
