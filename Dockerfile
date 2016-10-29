@@ -46,7 +46,6 @@ RUN set -x \
 ENV TOOLSERVER_PORT 8083
 EXPOSE 8082
 
-COPY data /usr/local/data/
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
@@ -63,3 +62,4 @@ RUN cd /usr/share/nginx/html/ && \
 COPY js /usr/share/nginx/html/
 
 COPY api /usr/local/bin/
+COPY data /usr/local/data/
