@@ -1,15 +1,54 @@
 <div class="row">
   <div class="col-sm-12">
-    <pre>{{ datasets | json }}</pre>
+    <h4>Available Data Sets</h4>
+    <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th width="70%">ID</th>
+          <th width="10%">Metadata</th>
+          <th width="10%">Launch</th>
+          <th width="10%">View</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="(id, metadata) in datasets">
+          <td><a ng-href="http://{{ metadata['girder_api_host'] }}:{{ metadata['girder_api_port'] }}" target="_blank">{{ id }}</a></td>
+          
+          <td><!-- Trigger the modal with a button -->
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+            
+            <!-- Modal -->
+            <div id="myModal" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+            
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Dataset {{ id }} metadata</h4>
+                  </div>
+                  <div class="modal-body">
+                    <pre>{{ metadata | json }}</pre>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+            
+              </div>
+            </div>
+          </td>
+          
+          <td><button class="btn btn-xs btn-primary" ng-click="resolve(id)"><i class="fa fa-fw fa-play"></i></button></td>
+          <td><a ng-href="{{ metadata['tool_url'] }}" ng-if="{{ metadata['tool_url'] }}" target="_blank"><i class="fa fa-fw fa-external-link-square"></i></a></td>
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
   </div>
 </div>
-
-<button class="btn btn-lg btn-primary" ng-click="resolve('test1')">Test Remote Dataset 1</button>
-<button class="btn btn-lg btn-primary" ng-click="resolve('test2')">Test Remote Dataset 2</button>
-
-<a ng-href="{{ tool.url }}" ng-if="tool.url" target="_blank">Go to Tool!</a>
-
-<pre ng-if="tool">{{ tool | json }}</pre>
 
 
 <div class="row" ng-if="'false'">

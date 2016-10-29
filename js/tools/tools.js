@@ -118,11 +118,22 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
     $scope.resolve = function(id, dataset) {
       Resolve.get({ id:id }, { /* POST body goes here */ }, function(tool) {
         $scope.tool = tool;
+        
         $log.debug("Successful GET to /resolve!");
       }, function(response) {
         $scope.tool = response.data;
         
         if (response.status == 302 && response.data.url) {
+          // Attach URL to target dataset
+          var target = null;
+          angular.forEach($scope.datasets, function(dataset) {
+            if (dataset.id === id) {
+              target.url = response.data.url;
+            }
+          });
+          
+          // Open a new tab to the tool
+          // NOTE: Pop-up blocker may prevent this from showing
           $window.open(response.data.url, '_blank');
           return;
         }
