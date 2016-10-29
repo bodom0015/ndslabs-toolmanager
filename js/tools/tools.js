@@ -121,8 +121,10 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
         $scope.tool = tool;
         $log.debug("Successful POST to /resolve!");
       }, function(response) {
+        $scope.tool = response.data;
+        
         if (response.status == 302 && response.data.url) {
-          $window.open(response.data.url, '_blank');
+          $window.open(response.data.url);
           return;
         }
         
