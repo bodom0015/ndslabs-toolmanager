@@ -288,13 +288,11 @@ class Metadata(restful.Resource):
 
         # Parse POST body into JSON
         json_data = request.get_json(force=True)
-        
-        logging.debug(json_data)
+        logging.debug(metadata)
         
         if type(json_data) is dict:
             addDataset(json_data['id'], json_data['metadata'])
         elif type(json_data) is list:
-            logging.debug(json_data)
             for dataset in json_data:
                 addDataset(dataset['id'], dataset['metadata'])
         else:
@@ -302,7 +300,7 @@ class Metadata(restful.Resource):
             return
 
         # Export new metadata store back out to disk
-        writeMetadata(metadata)
+        writeMetadata()
 
         return json_data, 201
 
@@ -339,15 +337,29 @@ class Toolbox(restful.Resource):
         
 def addDataset(id, dataset): 
     # Check for existing metadata for this id
-    metadataId = str(id)
-
     # Merge new data with previous, if any existed
-    if metadataId in metadata:
-        metadata[metadataId] = metadata[metadataId].copy().update(dataset)
+    if str(id) in metadata:
+        metadata[str(id)] = str(id).copy().update(dataset)
     else:
-        metadata[metadataId] = dataset
+        metadata[str(id)] = dataset
     
     return None
+
+# Read metadata from file
+def readMetadata(path=metadataPath):
+    logging.debug("readMetadata " + path)
+    mdFile = open(path)
+    metadataJson = mdFile.read()
+    mdFile.close()
+    return json.loads(metadataJson)
+
+# Write current metadata store to file
+def writeMetadata(path=metadataPath):
+    logging.debug("writeMetadata " + path)
+    mdFile = open(path, 'w')
+    mdFile.write(json.dumps(metadata))
+    mdFile.close()
+    return
 
 # Get configured tools from json file
 def getConfig(path=configPath):
@@ -431,23 +443,6 @@ def reloadNginx():
     logging.debug("reloadNginx")
     cmd = 'nginx -s reload'
     os.popen(cmd).read().rstrip()
-
-# Read metadata
-def readMetadata(path=metadataPath):
-    logging.debug("readMetadata " + path)
-    mdFile = open(path)
-    jsonData = mdFile.read()
-    mdFile.close()
-    return json.loads(jsonData)
-
-# Write current metadata store to file
-def writeMetadata(data, path=metadataPath):
-    jsonData = json.dumps(data)
-    logging.debug("writeMetadata " + jsonData + " -> " + path)
-    mdFile = open(path, 'w')
-    mdFile.write(jsonData)
-    mdFile.close()
-    return
 
 # Initialize tool configuration and load any instance data from previous runs
 config = getConfig()
