@@ -208,7 +208,7 @@ class Resolver(restful.Resource):
         
         # TODO: Retrieve and return notebook URL
         #return notebook, 201
-        return girder_proxy_uri + notebook['containerPath'], 302
+        return { notebook: notebook, url: girder_proxy_uri + notebook['containerPath'] }, 201
             
 def getMetadata(id):
     metadata = readMetadata()

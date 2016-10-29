@@ -6,7 +6,9 @@
 
 <button class="btn btn-lg btn-primary" ng-click="resolve('testlaunch')">Test Resolve</button>
 
-<pre ng-if="notebook">{{ notebook | json }}</pre>
+<a ng-href="tool.url" ng-if="tool">Go to Tool!</a>
+
+<pre ng-if="tool">{{ tool | json }}</pre>
 
 
 <div class="row">

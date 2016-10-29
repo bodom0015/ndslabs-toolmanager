@@ -117,8 +117,8 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
       });
       
       $scope.resolve = function(clickedId) {
-        Resolve.save({ id:clickedId }, { /* POST body goes here */ }, function(notebook) {
-          $scope.notebook = notebook
+        Resolve.save({ id:clickedId }, { /* POST body goes here */ }, function(tool) {
+          $scope.tool = tool;
           $log.debug("Successful POST to /resolve!");
         }, function() {
           $log.debug("Failed POST to /resolve!");
