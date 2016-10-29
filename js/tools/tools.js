@@ -131,10 +131,9 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
         
         if (response.status == 302 && response.data.url) {
           // Attach URL to target dataset
-          var target = null;
           angular.forEach($scope.datasets, function(dataset) {
             if (dataset.id === id) {
-              target.url = response.data.url;
+              dataset.metadata.tool_url = response.data.url;
             }
           });
           
