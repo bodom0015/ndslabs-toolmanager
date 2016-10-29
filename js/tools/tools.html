@@ -15,8 +15,8 @@
         <tr ng-repeat="(id, metadata) in datasets">
           <td><a ng-href="{{ metadata.girder_api_protocol }}{{ metadata.girder_api_host }}{{ metadata.girder_api_port }}" target="_blank">{{ id }}</a></td>
           <td><button type="button" class="btn btn-info btn-xs"  ng-click="viewMetadata(metadata)"><i class="fa fa-fw fa-code"></i></button></td>
-          <td><i class="fa fa-fw fa-spinner fa-pulse" ng-if="resolving[id]"></i><button class="btn btn-xs btn-default" ng-click="resolve(id)" ng-if="!resolving[id]"><i class="fa fa-fw fa-play" ng-disabled="metadata.tool_url"></i></button></td>
-          <td><a class="btn btn-xs btn-primary" ng-href="{{ metadata.tool_url }}" ng-disabled="!metadata.tool_url" target="_blank"><i class="fa fa-fw fa-external-link-square"></i></a></td>
+          <td><i class="fa fa-fw fa-spinner fa-pulse" ng-if="resolving[id]"></i><button class="btn btn-xs btn-default" ng-click="resolve(id)" ng-if="!resolving[id]"><i class="fa fa-fw fa-play" ng-disabled=""></i></button></td>
+          <td><a class="btn btn-xs btn-primary" ng-href="{{ metadata.tool_url }}" ng-if="metadata.tool_url" target="_blank"><i class="fa fa-fw fa-external-link-square"></i></a></td>
         </tr>
       </tbody>
     </table>
