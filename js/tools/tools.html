@@ -15,39 +15,20 @@
         <tr ng-repeat="(id, metadata) in datasets">
           <td><a ng-href="http://{{ metadata['girder_api_host'] }}:{{ metadata['girder_api_port'] }}" target="_blank">{{ id }}</a></td>
           
-          <td><!-- Trigger the modal with a button -->
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-            
-            <!-- Modal -->
-            <div id="myModal" class="modal fade" role="dialog">
-              <div class="modal-dialog">
-            
-                <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Dataset {{ id }} metadata</h4>
-                  </div>
-                  <div class="modal-body">
-                    <pre>{{ metadata | json }}</pre>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-            
-              </div>
-            </div>
-          </td>
+          <td><button type="button" class="btn btn-info btn-xs"  ng-click="viewMetadata=metadata"><i class="fa fa-fw fa-code"></i></button></td>
           
-          <td><button class="btn btn-xs btn-primary" ng-click="resolve(id)"><i class="fa fa-fw fa-play"></i></button></td>
-          <td><a ng-href="{{ metadata['tool_url'] }}" ng-if="{{ metadata['tool_url'] }}" target="_blank"><i class="fa fa-fw fa-external-link-square"></i></a></td>
+          <td><button class="btn btn-xs btn-default" ng-click="resolve(id)"><i class="fa fa-fw fa-play"></i></button></td>
           
+          <td><a class="btn btn-xs btn-primary" ng-href="{{ metadata['tool_url'] }}" ng-if="{{ metadata['tool_url'] }}" target="_blank"><i class="fa fa-fw fa-external-link-square"></i></a></td>
         </tr>
       </tbody>
     </table>
   </div>
   </div>
+</div>
+
+<div class="alert alert-info" ng-if="viewMetadata">
+  <pre>{{ viewMetadata | json }}</pre>
 </div>
 
 
