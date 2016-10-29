@@ -29,15 +29,6 @@ RUN apt-get -qq update && \
     apt-get -qq clean all && \
     rm -rf /var/cache/apk/* /tmp/*
     
-# Install npm / bower dependencies + ToolMaanger UI
-COPY js /usr/share/nginx/html/
-RUN cd /usr/share/nginx/html/ && \
-    npm install -g bower && \
-    npm install && \
-    bower install --config.interactive=false --allow-root && \
-    rm -rf /tmp/*
-
-
 ENV DOCKER_BUCKET get.docker.com
 ENV DOCKER_VERSION 1.10.3
 ENV DIND_COMMIT 3b5fac462d21ca164b3778647420016315289034
@@ -50,6 +41,14 @@ RUN set -x \
     && wget "https://raw.githubusercontent.com/docker/docker/${DIND_COMMIT}/hack/dind" -O /usr/local/bin/dind \
     && chmod +x /usr/local/bin/dind \
     && pip install flask-restful arrow jinja2 requests
+    
+# Install npm / bower dependencies + ToolMaanger UI
+COPY js /usr/share/nginx/html/
+RUN cd /usr/share/nginx/html/ && \
+    npm install -g bower && \
+    npm install && \
+    bower install --config.interactive=false --allow-root && \
+    rm -rf /tmp/*
      
 ENV TOOLSERVER_PORT 8083
 EXPOSE 8082
