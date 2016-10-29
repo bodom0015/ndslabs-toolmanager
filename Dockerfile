@@ -42,13 +42,6 @@ RUN set -x \
     && chmod +x /usr/local/bin/dind \
     && pip install flask-restful arrow jinja2 requests
     
-# Install npm / bower dependencies + ToolMaanger UI
-COPY js /usr/share/nginx/html/
-RUN cd /usr/share/nginx/html/ && \
-    npm install -g bower && \
-    npm install && \
-    bower install --config.interactive=false --allow-root && \
-    rm -rf /tmp/*
      
 ENV TOOLSERVER_PORT 8083
 EXPOSE 8082
@@ -58,5 +51,13 @@ COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["resolver"]
+
+# Install npm / bower dependencies + ToolMaanger UI
+COPY js /usr/share/nginx/html/
+RUN cd /usr/share/nginx/html/ && \
+    npm install -g bower && \
+    npm install && \
+    bower install --config.interactive=false --allow-root && \
+    rm -rf /tmp/*
 
 COPY api /usr/local/bin/
