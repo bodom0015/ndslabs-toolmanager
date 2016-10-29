@@ -107,6 +107,8 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
       });
     })();
     
+    
+        
      Datasets.get({ /* request parameters go here */ }, function(datasets) {
         $scope.datasets = datasets;
         $log.debug("Successful GET from /datasets!");
@@ -114,8 +116,8 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
         $log.debug("Failed GET from /datasets!");
       });
       
-      $scope.resolve = function() {
-        Resolve.save({ /* request parameters go here */ }, { /* POST body goes here */ }, function(notebook) {
+      $scope.resolve = function(clickedId) {
+        Resolve.save({ id:clickedId }, { /* POST body goes here */ }, function(notebook) {
           $scope.notebook = notebook
           $log.debug("Successful POST to /resolve!");
         }, function() {
