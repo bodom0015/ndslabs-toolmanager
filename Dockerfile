@@ -49,9 +49,7 @@ RUN set -x \
     && docker -v \
     && wget "https://raw.githubusercontent.com/docker/docker/${DIND_COMMIT}/hack/dind" -O /usr/local/bin/dind \
     && chmod +x /usr/local/bin/dind \
-    && pip install flask-restful \
-    && pip install jinja2 \
-    && pip install arrow 
+    && pip install flask-restful arrow jinja2 requests
      
 ENV TOOLSERVER_PORT 8083
 EXPOSE 8082
