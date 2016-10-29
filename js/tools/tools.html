@@ -4,14 +4,15 @@
   </div>
 </div>
 
-<button class="btn btn-lg btn-primary" ng-click="resolve('testlaunch')">Test Resolve</button>
+<button class="btn btn-lg btn-primary" ng-click="resolve('test1')">Test Remote Dataset 1</button>
+<button class="btn btn-lg btn-primary" ng-click="resolve('test2')">Test Remote Dataset 2</button>
 
 <a ng-href="{{ tool.url }}" ng-if="tool">Go to Tool!</a>
 
 <pre ng-if="tool">{{ tool | json }}</pre>
 
 
-<div class="row">
+<div class="row" ng-if="'false'">
   <div class="col-sm-offset-1 col-sm-8">
     <fieldset class="border-nds" ng-if="instances.template.dataset">
       <legend class="legend-fix">
@@ -112,7 +113,7 @@
   </div>
 </div>
 
-<div ng-if="instances.list">
+<div ng-if="instances.list.length">
   <h4>My Analysis Environments</h4>
   <div class="table-responsive">
     <table class="table">

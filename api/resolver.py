@@ -120,18 +120,21 @@ class Resolver(restful.Resource):
             return "Key not found", 404
         
         # TODO: Retrieve this from the site metadata
-        girder_api_protocol = 'http'
-        girder_api_host = '141.142.208.142'
-        girder_api_port = '8080'
-        girder_api_suffix = '/api/v1'
-        girder_api_uri = girder_api_protocol + '://' + girder_api_host + ':' + girder_api_port + girder_api_suffix
+        girder_api_protocol = val['girder_api_protocol']
+        girder_api_host = val['girder_api_host']
+        girder_api_port = val['girder_api_port']
+        girder_api_suffix = val['girder_api_suffix']
+        girder_api_uri = girder_api_protocol + girder_api_host + girder_api_port + girder_api_suffix
         
-        girder_proxy_port = '80'
-        girder_proxy_uri = girder_api_protocol + '://' + girder_api_host + ':' + girder_proxy_port + '/'
+        girder_proxy_port = val['girder_proxy_port']
+        girder_proxy_uri = girder_api_protocol + girder_api_host + girder_proxy_port + '/'
         
-        girder_folder_id = '5813c451bd2af0000156de85'
-        girder_guest_user = 'admin'
-        girder_guest_pass = '123456'
+        girder_folder_id = val['girder_folder_id']
+        
+        # This shared note environment is bad long-term
+        # TODO: needs federated auth somehow
+        girder_guest_user = val['girder_guest_user']
+        girder_guest_pass = val['girder_guest_pass']
         
         # TODO: Authenticate
         auth = requests.get(girder_api_uri + '/user/authentication', auth=HTTPBasicAuth(girder_guest_user, girder_guest_pass)).content
@@ -243,7 +246,7 @@ def readMetadata(path=metadataPath):
 def writeMetadata(path=metadataPath):
     logging.debug("writeMetadata " + path)
     mdFile = open(path, 'w')
-    mdFile.write(json.dumps(metadata))
+    mdFile.write(json.dumps(metadata, indent=2, sort_keys=True))
     mdFile.close()
     return
 

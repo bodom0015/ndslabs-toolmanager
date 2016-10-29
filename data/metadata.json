@@ -1,1 +1,22 @@
-{"321": {"tmpnb-url": "testomg123", "location": "http://test-changed.com"}, "124": {"tmpnb-url": "testomg", "location": "http://test-changed.com"}, "126": {"tmpnb-url": "testomg", "location": "http://test-changed.com"},"testlaunch": { "girder_api_uri": "http://141.142.208.142:8080/api/v1", "girder_proxy_uri": "http://141.142.208.142/", "girder_folder_id": "5813c451bd2af0000156de85", "girder_guest_user": "admin", "girder_guest_pass": "123456" } }
+{
+  "test1": {
+    "girder_api_protocol": "http://",
+    "girder_api_host": "141.142.208.142",
+    "girder_api_port": ":8080",
+    "girder_api_suffix": "\/api\/v1",
+    "girder_proxy_port": "",
+    "girder_folder_id": "5813c451bd2af0000156de85",
+    "girder_guest_user": "admin",
+    "girder_guest_pass": "123456"
+  },
+  "test2": {
+    "girder_api_protocol": "http://",
+    "girder_api_host": "141.142.208.127",
+    "girder_api_port": ":8080",
+    "girder_api_suffix": "\/api\/v1",
+    "girder_proxy_port": "",
+    "girder_folder_id": "5814dffcec18020001e6021d",
+    "girder_guest_user": "admin",
+    "girder_guest_pass": "123456"
+  }
+}

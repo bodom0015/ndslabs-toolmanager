@@ -107,24 +107,21 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
       });
     })();
     
+    Datasets.get({ /* request parameters go here */ }, function(datasets) {
+      $scope.datasets = datasets;
+      $log.debug("Successful GET from /datasets!");
+    }, function() {
+      $log.debug("Failed GET from /datasets!");
+    });
     
-        
-     Datasets.get({ /* request parameters go here */ }, function(datasets) {
-        $scope.datasets = datasets;
-        $log.debug("Successful GET from /datasets!");
+    $scope.resolve = function(id, dataset) {
+      Resolve.save({ id:id }, { /* POST body goes here */ }, function(tool) {
+        $scope.tool = tool;
+        $log.debug("Successful POST to /resolve!");
       }, function() {
-        $log.debug("Failed GET from /datasets!");
+        $log.debug("Failed POST to /resolve!");
       });
-      
-      $scope.resolve = function(clickedId) {
-        Resolve.save({ id:clickedId }, { /* POST body goes here */ }, function(tool) {
-          $scope.tool = tool;
-          $log.debug("Successful POST to /resolve!");
-        }, function() {
-          $log.debug("Failed POST to /resolve!");
-        });
-      };
-      
+    };
     
     var nextId = 1;
     
