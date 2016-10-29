@@ -177,7 +177,7 @@ class Resolver(restful.Resource):
         data = { 'id': girder_folder_id }
         postData = json.dumps(data)
         headers = {
-            'Content-Length': len(postData), 
+            'Content-Length': str(len(postData)), 
             'Content-Type': 'application/json', 
             'Girder-Token': auth['authToken']['token']
         }
