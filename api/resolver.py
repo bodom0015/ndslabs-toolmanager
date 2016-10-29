@@ -211,7 +211,7 @@ class Resolver(restful.Resource):
         #
         
         if 'containerPath' not in notebook:
-            return notebook['message'], 500
+            return notebook, 500
         
         # TODO: Retrieve and return notebook URL
         #return notebook, 201
