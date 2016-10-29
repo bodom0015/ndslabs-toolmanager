@@ -16,8 +16,11 @@ from requests.auth import HTTPBasicAuth
 # TODO: Comment this out to remove toolserver dependency
 from toolserver import *
 
+from flask_cors import CORS
+
 app = Flask(__name__) 
 api = restful.Api(app)
+CORS(app)
 
 id_parser = reqparse.RequestParser()
 id_parser.add_argument('id')
