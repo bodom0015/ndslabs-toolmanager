@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-if [ "$1" = "toolserver" ]; then
+if [ "$1" = "resolver" ]; then
 
    $(which dind) docker daemon \
         --host=unix:///var/run/docker.sock \
@@ -11,7 +11,7 @@ if [ "$1" = "toolserver" ]; then
 
    nginx &
 
-   toolserver.py & 
+   resolver.py & 
    sleep infinity
 else
    exec "$@"

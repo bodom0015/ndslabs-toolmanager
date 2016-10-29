@@ -10,6 +10,9 @@ from flask import Flask, request
 from flask_restful import reqparse, abort, Api, Resource
 from jinja2 import Template
 
+# TODO: Comment this out to remove toolserver dependency
+from toolserver import *
+
 app = Flask(__name__) 
 api = restful.Api(app)
 
@@ -100,8 +103,24 @@ def writeMetadata(path=metadataPath):
 
 metadata = readMetadata()
 
+# ENDPOINTS ----------------
+# /tools will fetch summary of available tools that can be launched
+api.add_resource(Toolbox, '/tools') 
+
+# /instances will fetch the list of instances that are running on the server
+api.add_resource(Instances, '/instances')
+
+# /instances/id fetches details of a particular instance, including URL, owner, history, etc.
+# /instances/toolPath 
+api.add_resource(Instance, '/instances/<string:id>')
+
+
+# /logs should return docker logs for the requested container
+api.add_resource(DockerLog, '/logs/<string:id>')
+
 # /datasets is for querying and updating dataset metadata from other sites
 api.add_resource(Metadata, '/datasets')
+
 
 # Same as /datasets?id=<string>, resolves an ID to the set of associated metadata
 api.add_resource(Resolver, '/resolve/<string:id>')

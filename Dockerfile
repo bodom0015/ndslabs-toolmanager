@@ -60,6 +60,6 @@ COPY data /usr/local/data/
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["toolserver"]
+CMD ["resolver"]
 
 COPY api /usr/local/bin/
