@@ -5,7 +5,7 @@ import arrow
 import logging
 import subprocess
 import flask_restful as restful
-from flask import Flask, request, redirect
+from flask import Flask, request
 #from flask.ext import restful
 from flask_restful import reqparse, abort, Api, Resource
 from jinja2 import Template
@@ -16,11 +16,8 @@ from requests.auth import HTTPBasicAuth
 # TODO: Comment this out to remove toolserver dependency
 from toolserver import *
 
-from flask_cors import CORS
-
 app = Flask(__name__) 
 api = restful.Api(app)
-CORS(app)
 
 id_parser = reqparse.RequestParser()
 id_parser.add_argument('id')
@@ -110,6 +107,10 @@ class Metadata(restful.Resource):
 class Resolver(restful.Resource):
     def get(self, id):
         logging.debug("Resolver.get")
+        return getMetadata(id)
+
+    def post(self, id):
+        logging.debug("Resolver.post")
         
         metadata = readMetadata()
         
@@ -214,12 +215,10 @@ class Resolver(restful.Resource):
         
         # TODO: Retrieve and return notebook URL
         #return notebook, 201
-        
-        tool_url = girder_proxy_uri + notebook['containerPath']
-        
-        logging.debug(tool_url)
-        
-        return redirect(tool_url, code=302)
+        return { 
+            "notebook": notebook, 
+            "url": girder_proxy_uri + notebook['containerPath'] 
+        }, 302
             
 def getMetadata(id):
     metadata = readMetadata()
