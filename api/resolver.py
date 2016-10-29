@@ -5,7 +5,7 @@ import arrow
 import logging
 import subprocess
 import flask_restful as restful
-from flask import Flask, request
+from flask import Flask, request, redirect
 #from flask.ext import restful
 from flask_restful import reqparse, abort, Api, Resource
 from jinja2 import Template
