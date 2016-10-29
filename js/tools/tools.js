@@ -32,8 +32,7 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
 /**
  * Configure "Launch" REST API Client
  * 
- * GET /resolve/<string:id> => lookup metadata about a given id (this is the same as GET /datasets?id<string:id>)
- * POST /resolve/<string:id> => lookup metadata about a given id, then use this metadata to launch a notebook next to the data
+ * GET /resolve/<string:id> => lookup metadata about a given id, then use this metadata to launch a notebook next to the data
  */
 .factory('Resolve', [ '$resource', function($resource) {
   return $resource('/api/resolve/:id', {});

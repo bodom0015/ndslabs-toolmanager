@@ -107,10 +107,6 @@ class Metadata(restful.Resource):
 class Resolver(restful.Resource):
     def get(self, id):
         logging.debug("Resolver.get")
-        return getMetadata(id)
-
-    def post(self, id):
-        logging.debug("Resolver.post")
         
         metadata = readMetadata()
         
