@@ -3,13 +3,16 @@
 import os, json
 import arrow
 import logging
-import requests
 import subprocess
 import flask_restful as restful
 from flask import Flask, request
 #from flask.ext import restful
 from flask_restful import reqparse, abort, Api, Resource
 from jinja2 import Template
+
+
+import requests
+from requests.auth import HTTPBasicAuth
 
 # TODO: Comment this out to remove toolserver dependency
 from toolserver import *
@@ -81,17 +84,97 @@ class Resolver(restful.Resource):
         
         if val is None:
             return "Key not found", 404
-    
-    
+        
+        # TODO: Retrieve this from the site metadata
+        girder_api_protocol = 'http'
+        girder_api_host = '141.142.208.142'
+        girder_api_port = '8080'
+        girder_api_suffix = '/api/v1'
+        girder_api_uri = girder_api_protocol + '://' + girder_api_host + ':' + girder_api_port + girder_api_suffix
+        
+        girder_proxy_port = '80'
+        girder_proxy_uri = girder_api_protocol + '://' + girder_api_host + ':' + girder_proxy_port + '/'
+        
+        girder_folder_id = '5813c451bd2af0000156de85'
+        girder_guest_user = 'admin'
+        girder_guest_pass = '123456'
+        
         # TODO: Authenticate
-    
-        # TODO: Parameterize hostname / port?
-        # TODO Send proper request data
-        logging.debug(requests.post('http://141.142.208.142:8080/api/v1/notebook', data = {'key':'value'}))
+        auth = requests.get(girder_api_uri + '/user/authentication', auth=HTTPBasicAuth(girder_guest_user, girder_guest_pass)).content
+        logging.debug(auth)
+        
+        # Example response:
+        # {
+        #   "authToken": {
+        #     "expires": "2017-04-24T21:48:48.070000+00:00",
+        #     "scope": [
+        #       "core.user_auth"
+        #     ],
+        #     "token": "fai4BDAjN5Ba5S9fFRLNKK69gdkhfd4YOchc1mC64gkQMptcV0lV6nFPBRu0jzga"
+        #   },
+        #   "message": "Login succeeded.",
+        #   "user": {
+        #     "_accessLevel": 2,
+        #     "_id": "581124c0bd2af000015c7e44",
+        #     "_modelType": "user",
+        #     "admin": true,
+        #     "created": "2016-10-26T21:48:47.634000+00:00",
+        #     "email": "lambert8@illinois.edu",
+        #     "emailVerified": true,
+        #     "firstName": "Mike",
+        #     "groupInvites": [],
+        #     "groups": [],
+        #     "lastName": "Lambert",
+        #     "login": "admin",
+        #     "public": true,
+        #     "size": 0,
+        #     "status": "enabled"
+        #   } 
+        # }
+        intermediate_url=girder_api_uri + '/notebook/' + girder_folder_id
+        logging.debug(intermediate_url)
+        
+        # Parse the string response into JSON
+        auth = json.loads(auth)
+        
+        logging.debug("Token: " +  auth['authToken']['token'])
+        
+        # TODO: Build up proper headers
+        data = { 'id': girder_folder_id }
+        postData = json.dumps(data)
+        headers = {
+            'Content-Length': len(postData), 
+            'Content-Type': 'application/json', 
+            'Girder-Token': auth['authToken']['token']
+        }
+        
+        # TODO: Send proper POST body?
+        notebook = requests.post(intermediate_url, data=data, headers=headers).text
+        logging.debug(notebook)
+        
+        # Parse the string response into JSON
+        notebook = json.loads(notebook)
+        
+        # Example response:
+        # {/user/fXJxgykVoLJg/tree
+        #   "_accessLevel": 2,
+        #   "_id": "58142ff5bd2af0000156de87",
+        #   "_modelType": "notebook",
+        #   "containerId": "89a08c97cbe31f484ca1545d4467024feefc881ea8c4af0e4ab8a9dc05fd4a16",
+        #   "containerPath": "user/fXJxgykVoLJg",
+        #   "created": "2016-10-29T05:13:14.142929+00:00",
+        #   "folderId": "5813c451bd2af0000156de85",
+        #   "lastActivity": "2016-10-29T05:13:14.142929+00:00",
+        #   "mountPoint": "/var/lib/docker/volumes/5813c451bd2af0000156de85_admin/_data",
+        #   "status": 0,
+        #   "userId": "581124c0bd2af000015c7e44",
+        #   "when": "2016-10-29T05:13:14.142929+00:00"
+        # }
+        #
         
         # TODO: Retrieve and return notebook URL
-            
-        return
+        #return notebook, 201
+        return girder_proxy_uri + notebook['containerPath'], 302
             
 def getMetadata(id):
     metadata = readMetadata()

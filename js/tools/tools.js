@@ -30,6 +30,35 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
 }])
 
 /**
+ * Configure "Launch" REST API Client
+ * 
+ * GET /resolve/<string:id> => lookup metadata about a given id (this is the same as GET /datasets?id<string:id>)
+ * POST /resolve/<string:id> => lookup metadata about a given id, then use this metadata to launch a notebook next to the data
+ */
+.factory('Launch', [ '$resource', function($resource) {
+  return $resource('/resolve/:id', {});
+}])
+
+/**
+ * Configure "Datasets" REST API Client
+ * 
+ * DELETE /datasets                 => Not implemented - returns 501
+ * PUT /datasets                    => Not implemented - returns 501
+ * GET /datasets                    => lookup all metadata records
+ * GET /datasets?id=<string:id>     => lookup metadata about a given id (this is the same as GET /resolve/<string:id>)
+ * POST /datasets                   => Import dataset or datasets ids/metadata provided in the POST body
+ *    Expected Body: object or array of objects containing only the following two fields:
+ *        -id: the string identifier of a metadata record
+ *        -metadata: a JSON object containing any necessary information needed to launch the record
+ *              (i.e. capabilities, urls, guest user credentials, etc.)
+ * 
+ * NOTE: all other fields on POST body will be ignored
+ */
+.factory('Datasets', [ '$resource', function($resource) {
+  return $resource('/datasets', {});
+}])
+
+/**
  * Configure up a route to the "Toolbox" view
  */
 .config(['$routeProvider', function($routeProvider) {
