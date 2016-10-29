@@ -114,7 +114,7 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
         $log.debug("Failed GET from /datasets!");
       });
       
-      $scope.testResolve = function() {
+      $scope.resolve = function() {
         Resolve.save({ /* request parameters go here */ }, { /* POST body goes here */ }, function(notebook) {
           $scope.notebook = notebook
           $log.debug("Successful POST to /resolve!");

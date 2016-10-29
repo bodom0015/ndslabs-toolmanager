@@ -53,11 +53,13 @@ ENTRYPOINT ["/entrypoint.sh"]
 CMD ["resolver"]
 
 # Install npm / bower dependencies + ToolMaanger UI
-COPY js /usr/share/nginx/html/
+COPY js/package.json js/bower.json /usr/share/nginx/html/
 RUN cd /usr/share/nginx/html/ && \
     npm install -g bower && \
     npm install && \
     bower install --config.interactive=false --allow-root && \
     rm -rf /tmp/*
+
+COPY js /usr/share/nginx/html/
 
 COPY api /usr/local/bin/
