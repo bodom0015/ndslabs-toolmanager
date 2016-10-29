@@ -21,7 +21,8 @@ app = Flask(__name__)
 api = restful.Api(app)
 
 PORTNUM = os.getenv('TOOLSERVER_PORT', "8083")
-metadataPath = "./data/metadata.json"
+basePath = '/usr/local'
+metadataPath = basePath + '/data/metadata.json'
 metadata = {}
 
 class Metadata(restful.Resource):
