@@ -107,7 +107,8 @@ angular.module('toolmgr.tools', ['ngRoute', 'ngResource', /*'toolmgr.instances'*
       });
     })();
     
-     $scope.datasets = Datasets.query({ /* request parameters go here */ }, function() {
+     Datasets.get({ /* request parameters go here */ }, function(datasets) {
+        $scope.datasets = datasets;
         $log.debug("Successful GET from /datasets!");
       }, function() {
         $log.debug("Failed GET from /datasets!");
