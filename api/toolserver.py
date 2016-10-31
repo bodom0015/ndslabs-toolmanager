@@ -52,11 +52,8 @@ templatesPath = basePath + '/data/templates/'
 class DockerLog(restful.Resource):
 
     def get(self):
-        logging.debug("DockerLog.log") # " + id)
-        #if id is not None:
-        #    p = subprocess.Popen(['docker', 'logs', id], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        #else:
-        p = subprocess.Popen(['docker', 'logs', 'toolmgr'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        logging.debug("DockerLog.log " + id)
+        p = subprocess.Popen(['docker', 'logs', id], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         out, err = p.communicate()
         return out, 200
 
@@ -409,8 +406,7 @@ api.add_resource(Instance, '/instances/<string:id>')
 
 
 # /logs should return docker logs for the requested container
-#api.add_resource(DockerLog, '/logs/<string:id>')
-api.add_resource(DockerLog, '/logs')
+api.add_resource(DockerLog, '/logs/<string:id>')
 
 # ----------------------------
 

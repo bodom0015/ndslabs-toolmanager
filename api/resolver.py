@@ -19,32 +19,6 @@ from toolserver import *
 app = Flask(__name__) 
 api = restful.Api(app)
 
-id_parser = reqparse.RequestParser()
-id_parser.add_argument('id')
-
-post_parser = reqparse.RequestParser()
-post_parser.add_argument('name')        # human-readable name to refer to instance for displaying running list
-post_parser.add_argument('dataset')     # Dataset download URL e.g. "http://0.0.0.0:9000/clowder/api/datasets/<ds_id>/download"
-post_parser.add_argument('datasetId')   # Dataset ID separate from full path, for generating upload history
-post_parser.add_argument('datasetName') # Dataset name for generating upload history
-post_parser.add_argument('key')         # API key
-post_parser.add_argument('ownerId')     # UUID of user who is creating this instance
-post_parser.add_argument('source')      # Source application
-
-put_parser = reqparse.RequestParser()
-put_parser.add_argument('id')           # tool containerID to upload dataset into
-put_parser.add_argument('dataset')      # Dataset download URL e.g. "http://0.0.0.0:9000/clowder/api/datasets/<ds_id>/download"
-put_parser.add_argument('datasetId')    # Dataset ID separate from full path, for generating upload history
-put_parser.add_argument('datasetName')  # Dataset name for generating upload history
-put_parser.add_argument('key')          # API key
-put_parser.add_argument('uploaderId')   # UUID of user who is uploading this dataset
-put_parser.add_argument('source')       # Source application
-
-get_parser = reqparse.RequestParser()
-get_parser.add_argument('id')
-get_parser.add_argument('ownerId')      # UUID of user who created the instance
-get_parser.add_argument('source')       # Source application
-
 logging.basicConfig(level=logging.DEBUG)
 # TODO: Move these parameters somewhere else?
 PORTNUM = os.getenv('TOOLSERVER_PORT', "8083")
@@ -53,11 +27,19 @@ configPath = basePath + "/data/toolconfig.json"
 instancesPath = basePath + "/data/instances.json"
 templatesPath = basePath + "/data/templates/"
 
-
-PORTNUM = os.getenv('TOOLSERVER_PORT', "8083")
 metadataPath = basePath + "/data/metadata.json"
 metadata = {}
+        
+"""Allow remote user to get contents of logs for container"""
+class DockerLog(restful.Resource):
 
+    def get(self):
+        logging.debug("DockerLog.log " + id)
+        p = subprocess.Popen(['docker', 'logs', id], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        out, err = p.communicate()
+        return out, 200
+        
+"""Allow remote user to lookup metadata about a particular dataset identifier"""
 class Metadata(restful.Resource):
     def get(self):
         logging.debug("Datasets.get")
@@ -103,7 +85,7 @@ class Metadata(restful.Resource):
         logging.debug("Datasets.delete")
         return "Operation not supported", 501
         
-        
+"""Allow remote user to launch tools next to a given dataset using its associated metadata"""
 class Resolver(restful.Resource):
     def get(self, id):
         logging.debug("Resolver.get")
@@ -256,20 +238,8 @@ metadata = readMetadata()
 config = getConfig()
 instanceAttrs = getInstanceAttrsFromFile()
 
-# ENDPOINTS ----------------
-# /tools will fetch summary of available tools that can be launched
-api.add_resource(Toolbox, '/tools') 
-
-# /instances will fetch the list of instances that are running on the server
-api.add_resource(Instances, '/instances')
-
-# /instances/id fetches details of a particular instance, including URL, owner, history, etc.
-# /instances/toolPath 
-api.add_resource(Instance, '/instances/<string:id>')
-
-
 # /logs should return docker logs for the requested container
-api.add_resource(DockerLog, '/logs/<string:id>')
+api.add_resource(DockerLog, '/logs')
 
 # /datasets is for querying and updating dataset metadata from other sites
 api.add_resource(Metadata, '/datasets')
