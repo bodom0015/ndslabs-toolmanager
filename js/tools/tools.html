@@ -1,4 +1,4 @@
-<div class="row" ng-if="'false'">
+<div class="row">
   <div class="col-sm-offset-1 col-sm-8">
     <fieldset class="border-nds" ng-if="instances.template.dataset">
       <legend class="legend-fix">
@@ -71,7 +71,7 @@
         </div>
         
         
-        <div class="col-sm-6" ng-if="instances.list">
+        <div class="col-sm-6" ng-if="instances.list.length">
           <h4>Attach to an existing tool instance</h4>
           <form>
             <div class="form-group"> 
