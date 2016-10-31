@@ -1,34 +1,3 @@
-<div class="row">
-  <div class="col-sm-12">
-    <h4>Available Data Sets</h4>
-    <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th width="70%">Identifier</th>
-          <th width="10%" class="text-center">Metadata</th>
-          <th width="10%" class="text-center">Launch Notebook</th>
-          <th width="10%"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="(id, metadata) in datasets">
-          <td><a ng-href="{{ metadata.girder_api_protocol }}{{ metadata.girder_api_host }}{{ metadata.girder_api_port }}" target="_blank">{{ id }}</a></td>
-          <td class="text-center"><button type="button" class="btn btn-info btn-xs"  ng-click="viewMetadata(metadata)"><i class="fa fa-fw fa-code"></i></button></td>
-          <td class="text-center"><button class="btn btn-xs btn-primary" ng-click="resolve(id)" ng-if="!resolving[id]"><i class="fa fa-fw fa-play"></i></button><i class="fa fa-fw fa-spinner fa-pulse" ng-if="resolving[id]"></i></td>
-          <td class="text-center"><a class="btn btn-xs btn-link" ng-href="{{ metadata.tool_url }}" ng-if="metadata.tool_url" target="_blank">View Notebook <i class="fa fa-fw fa-external-link-square"></i></a></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  </div>
-</div>
-
-<div class="alert alert-info" ng-if="selectedMetadata">
-  <i class="fa fa-fw fa-times pull-right cursor-pointer" ng-click="viewMetadata(null)"></i>
-  <pre>{{ selectedMetadata | json }}</pre>
-</div>
-
 <div class="row" ng-if="'false'">
   <div class="col-sm-offset-1 col-sm-8">
     <fieldset class="border-nds" ng-if="instances.template.dataset">

@@ -5,8 +5,8 @@
 // Declare app level module which depends on views, and components
 angular.module('toolmgr', [
   'ngRoute',
-  /*'toolmgr.logs',*/
-  'toolmgr.tools',
+  'toolmgr.datasets',
+  /*'toolmgr.tools',*/
   /*'toolmgr.instances'*/
 ])
 
@@ -29,5 +29,6 @@ angular.module('toolmgr', [
 .config(['$locationProvider', '$logProvider', '$routeProvider', function($locationProvider, $logProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
   $logProvider.debugEnabled(true);
-  $routeProvider.otherwise({redirectTo: '/tools'});
+  //$routeProvider.otherwise({redirectTo: '/tools'});
+  $routeProvider.otherwise({redirectTo: '/datasets'});
 }]);

@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="pull-right"><button type="button" class="btn btn-link btn-xs"  ng-click="viewMetadata(getLogs())"><i class="fa fa-fw fa-file-code-o"></i></button></div>
+    <h4>Available Data Sets</h4>
+    <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th width="60%">Identifier</th>
+          <th width="15%" class="text-center">Metadata</th>
+          <th width="15%" class="text-center">Launch Notebook</th>
+          <th width="20%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="(id, metadata) in datasets">
+          <!-- Link to the dataset -->
+          <td>
+            <a ng-href="{{ metadata.girder_api_protocol }}{{ metadata.girder_api_host }}{{ metadata.girder_api_port }}" target="_blank">{{ id }}</a>
+          </td>
+          
+          <!-- View the dataset metadata -->
+          <td class="text-center">
+            <button type="button" class="btn btn-info btn-xs"  ng-click="viewMetadata(metadata)">
+              <i class="fa fa-fw fa-code"></i>
+            </button>
+          </td>
+          
+          <!-- Launch a notebook -->
+          <td class="text-center">
+            <button class="btn btn-xs btn-primary" ng-click="resolve(id)" ng-if="!resolving[id]">
+              <i class="fa fa-fw fa-play"></i>
+            </button>
+            <i class="fa fa-fw fa-spinner fa-pulse" ng-if="resolving[id]"></i>
+          </td>
+          
+          <!-- Link to the launched notebook -->
+          <td class="text-center">
+            <a class="btn btn-xs btn-link" ng-href="{{ metadata.tool_url }}" ng-if="metadata.tool_url" target="_blank">
+              View Notebook <i class="fa fa-fw fa-external-link-square"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+</div>
+
+<div class="alert alert-info" ng-if="selectedMetadata">
+  <i class="fa fa-fw fa-times pull-right cursor-pointer" ng-click="viewMetadata(null)"></i>
+  <pre>{{ selectedMetadata | json }}</pre>
+</div>
