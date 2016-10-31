@@ -52,7 +52,7 @@ templatesPath = basePath + '/data/templates/'
 class DockerLog(restful.Resource):
 
     def get(self):
-        logging.debug("DockerLog.log " + id)
+        logging.debug("DockerLog.log" + id)
         p = subprocess.Popen(['docker', 'logs', id], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         out, err = p.communicate()
         return out, 200

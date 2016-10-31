@@ -39,10 +39,6 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
 }])
 
 
-.factory('Logs', [ '$resource', function($resource) {
-  return $resource('/api/logs', {});
-}])
-
 /**
  * Configure up a route to the "Datasets" view
  */
@@ -56,8 +52,8 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
 /**
  * The controller for our "Datasets" view
  */
-.controller('DatasetsCtrl', [ '$log', '$scope', '$window', 'Datasets', 'Resolve', 'Logs',
-      function($log, $scope, $window, Datasets, Resolve, Logs) {
+.controller('DatasetsCtrl', [ '$log', '$scope', '$window', 'Datasets', 'Resolve',
+      function($log, $scope, $window, Datasets, Resolve) {
     
     $scope.selectedMetadata = null;
     

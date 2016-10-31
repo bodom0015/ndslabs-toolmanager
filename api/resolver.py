@@ -30,15 +30,6 @@ templatesPath = basePath + "/data/templates/"
 metadataPath = basePath + "/data/metadata.json"
 metadata = {}
         
-"""Allow remote user to get contents of logs for container"""
-class DockerLog(restful.Resource):
-
-    def get(self):
-        logging.debug("DockerLog.log")
-        p = subprocess.Popen(['docker', 'logs', 'toolmgr'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        out, err = p.communicate()
-        return out, 200
-        
 """Allow remote user to lookup metadata about a particular dataset identifier"""
 class Metadata(restful.Resource):
     def get(self):
@@ -238,12 +229,22 @@ metadata = readMetadata()
 config = getConfig()
 instanceAttrs = getInstanceAttrsFromFile()
 
+# ENDPOINTS ----------------
+# /tools will fetch summary of available tools that can be launched
+api.add_resource(Toolbox, '/tools') 
+
+# /instances will fetch the list of instances that are running on the server
+api.add_resource(Instances, '/instances')
+
+# /instances/id fetches details of a particular instance, including URL, owner, history, etc.
+# /instances/toolPath 
+api.add_resource(Instance, '/instances/<string:id>')
+
 # /logs should return docker logs for the requested container
-api.add_resource(DockerLog, '/logs')
+api.add_resource(DockerLog, '/logs/<string:id>')
 
 # /datasets is for querying and updating dataset metadata from other sites
 api.add_resource(Metadata, '/datasets')
-
 
 # Same as /datasets?id=<string>, resolves an ID to the set of associated metadata
 api.add_resource(Resolver, '/resolve/<string:id>')
