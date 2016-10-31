@@ -55,7 +55,7 @@ class DockerLog(restful.Resource):
         logging.debug("DockerLog.log " + id)
         if id is not None:
             p = subprocess.Popen(['docker', 'logs', id], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        else
+        else:
             p = subprocess.Popen(['docker', 'logs', 'toolmgr'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         out, err = p.communicate()
         return out, 200
