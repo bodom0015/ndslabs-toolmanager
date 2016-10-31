@@ -51,12 +51,12 @@ templatesPath = basePath + '/data/templates/'
 """Allow remote user to get contents of logs for container"""
 class DockerLog(restful.Resource):
 
-    def get(self, id):
-        logging.debug("DockerLog.log " + id)
-        if id is not None:
-            p = subprocess.Popen(['docker', 'logs', id], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        else:
-            p = subprocess.Popen(['docker', 'logs', 'toolmgr'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    def get(self):
+        logging.debug("DockerLog.log") # " + id)
+        #if id is not None:
+        #    p = subprocess.Popen(['docker', 'logs', id], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        #else:
+        p = subprocess.Popen(['docker', 'logs', 'toolmgr'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         out, err = p.communicate()
         return out, 200
 
@@ -409,7 +409,9 @@ api.add_resource(Instance, '/instances/<string:id>')
 
 
 # /logs should return docker logs for the requested container
-api.add_resource(DockerLog, '/logs/<string:id>')
+#api.add_resource(DockerLog, '/logs/<string:id>')
+api.add_resource(DockerLog, '/logs')
+
 # ----------------------------
 
 if __name__ == '__main__':

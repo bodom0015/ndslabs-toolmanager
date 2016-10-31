@@ -40,7 +40,7 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
 
 
 .factory('Logs', [ '$resource', function($resource) {
-  return $resource('/api/logs/:containerId', {});
+  return $resource('/api/logs', {});
 }])
 
 /**
