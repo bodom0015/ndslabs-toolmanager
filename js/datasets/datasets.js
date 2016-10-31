@@ -48,7 +48,7 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
  */
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/datasets', {
-    templateUrl: 'datasets/dataset.html',
+    templateUrl: 'datasets/datasets.html',
     controller: 'DatasetsCtrl'
   });
 }])
