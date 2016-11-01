@@ -80,7 +80,7 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
         
         // Append dataset label
         if (metadata.dataset.label) {
-          citation += metadata.dataset.label + ', ';
+          citation += '"' + metadata.dataset.label + '", ';
         }
       }
       
