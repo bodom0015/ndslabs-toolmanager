@@ -13,20 +13,13 @@ from jinja2 import Template
 import requests
 from requests.auth import HTTPBasicAuth
 
-# TODO: Comment this out to remove toolserver dependency
-from toolserver import *
-
 app = Flask(__name__) 
 api = restful.Api(app)
 
 logging.basicConfig(level=logging.DEBUG)
-# TODO: Move these parameters somewhere else?
+
 PORTNUM = os.getenv('TOOLSERVER_PORT', "8083")
 basePath = '/usr/local'
-configPath = basePath + "/data/toolconfig.json"
-instancesPath = basePath + "/data/instances.json"
-templatesPath = basePath + "/data/templates/"
-
 metadataPath = basePath + "/data/metadata.json"
 metadata = {}
         
@@ -225,24 +218,6 @@ def writeMetadata(path=metadataPath):
 
 metadata = readMetadata()
 
-# Initialize tool configuration and load any instance data from previous runs
-config = getConfig()
-instanceAttrs = getInstanceAttrsFromFile()
-
-# ENDPOINTS ----------------
-# /tools will fetch summary of available tools that can be launched
-api.add_resource(Toolbox, '/tools') 
-
-# /instances will fetch the list of instances that are running on the server
-api.add_resource(Instances, '/instances')
-
-# /instances/id fetches details of a particular instance, including URL, owner, history, etc.
-# /instances/toolPath 
-api.add_resource(Instance, '/instances/<string:id>')
-
-# /logs should return docker logs for the requested container
-api.add_resource(DockerLog, '/logs/<string:id>')
-
 # /datasets is for querying and updating dataset metadata from other sites
 api.add_resource(Metadata, '/datasets')
 
@@ -252,5 +227,4 @@ api.add_resource(Resolver, '/resolve/<string:id>')
 # ----------------------------
 
 if __name__ == '__main__':
-    writeNginxConf()
     app.run(host="0.0.0.0", port=int(PORTNUM), debug=True)

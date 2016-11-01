@@ -1,12 +1,13 @@
 <div class="row">
   <div class="col-sm-12">
-    <div class="pull-right"><button type="button" class="btn btn-link btn-xs"  ng-click="viewMetadata(getLogs())"><i class="fa fa-fw fa-file-code-o"></i></button></div>
-    <h4>Available Data Sets</h4>
+    <div class="pull-right"></div>
+    <h4>Registered Data Sets</h4>
     <div class="table-responsive">
     <table class="table">
       <thead>
         <tr>
-          <th width="60%">Identifier</th>
+          <th>Identifier</th>
+          <th width="15%" class="text-center">Citation</th>
           <th width="15%" class="text-center">Metadata</th>
           <th width="15%" class="text-center">Launch Notebook</th>
           <th width="20%"></th>
@@ -16,7 +17,14 @@
         <tr ng-repeat="(id, metadata) in datasets">
           <!-- Link to the dataset -->
           <td>
-            <a ng-href="{{ metadata.girder_api_protocol }}{{ metadata.girder_api_host }}{{ metadata.girder_api_port }}" target="_blank">{{ id }}</a>
+            <a ng-href="{{ metadata.dataset.landing_url || (metadata.girder.api_protocol + metadata.girder.api_host + metadata.girder.api_port) }}" target="_blank">{{ metadata.dataset.label || id }}</a>
+          </td>
+          
+          <!-- View the dataset's citation -->
+          <td class="text-center">
+            <button type="button" class="btn btn-info btn-xs"  ng-click="viewCitation(id, metadata)">
+              <i class="fa fa-fw fa-paperclip"></i>
+            </button>
           </td>
           
           <!-- View the dataset metadata -->
@@ -36,7 +44,7 @@
           
           <!-- Link to the launched notebook -->
           <td class="text-center">
-            <a class="btn btn-xs btn-link" ng-href="{{ metadata.tool_url }}" ng-if="metadata.tool_url" target="_blank">
+            <a class="btn btn-xs btn-link" ng-href="{{ metadata.girder.tool_url }}" ng-if="metadata.girder.tool_url" target="_blank">
               View Notebook <i class="fa fa-fw fa-external-link-square"></i>
             </a>
           </td>
