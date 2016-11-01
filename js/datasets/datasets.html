@@ -7,8 +7,8 @@
       <thead>
         <tr>
           <th>Identifier</th>
-          <th width="15%" class="text-center">Cite Dataset</th>
           <th width="15%" class="text-center">Metadata</th>
+          <th width="15%" class="text-center">Cite Dataset</th>
           <th width="15%" class="text-center">Launch Notebook</th>
           <th width="20%"></th>
         </tr>
@@ -20,17 +20,17 @@
             <a ng-href="{{ metadata.dataset.landing_url || (metadata.girder.api_protocol + metadata.girder.api_host + metadata.girder.api_port) }}" target="_blank">{{ metadata.dataset.label || id }}</a>
           </td>
           
-          <!-- View the dataset's citation -->
-          <td class="text-center">
-            <button type="button" class="btn btn-info btn-xs"  ng-click="viewCitation(id, metadata)">
-              <i class="fa fa-fw fa-paperclip"></i>
-            </button>
-          </td>
-          
           <!-- View the dataset metadata -->
           <td class="text-center">
             <button type="button" class="btn btn-info btn-xs"  ng-click="viewMetadata(metadata)">
               <i class="fa fa-fw fa-code"></i>
+            </button>
+          </td>
+          
+          <!-- View the dataset's citation -->
+          <td class="text-center">
+            <button type="button" class="btn btn-info btn-xs"  ng-click="viewCitation(id, metadata)">
+              <i class="fa fa-fw fa-paperclip"></i>
             </button>
           </td>
           
