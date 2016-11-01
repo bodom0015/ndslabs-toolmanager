@@ -62,6 +62,7 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
     
     $scope.selectedMetadata = null;
     
+    // TODO: This is ugly and I hate it... should be a filter
     $scope.viewCitation = function(id, metadata) {
       var citation = '';
       
@@ -73,12 +74,12 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
             if (author !== metadata.dataset.authors[0]) {
               citation += ', '
             }
-            citation += author;
+            citation += author.lastName + ', ' + author.firstName + ' (' + author.email + ')';
           });
         }
         
         // Append dataset label
-        if (metadata.dataset_label) {
+        if (metadata.dataset.label) {
           citation += ', ' + metadata.dataset.label;
         }
       }
