@@ -64,6 +64,7 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
     
     // TODO: This is ugly and I hate it... should be a filter
     $scope.viewCitation = function(id, metadata) {
+      $scope.viewJson = false;
       var citation = '';
       
       if (metadata.dataset) {
@@ -92,6 +93,7 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
     
     $scope.viewMetadata = function(metadata) {
       $scope.selectedMetadata = metadata;
+      $scope.viewJson = true;
     };
     
     
