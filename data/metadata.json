@@ -1,22 +1,48 @@
 {
-  "test1": {
-    "girder_api_protocol": "http://",
-    "girder_api_host": "141.142.208.142",
-    "girder_api_port": ":8080",
-    "girder_api_suffix": "\/api\/v1",
-    "girder_proxy_port": "",
-    "girder_folder_id": "5813c451bd2af0000156de85",
-    "girder_guest_user": "admin",
-    "girder_guest_pass": "123456"
+  "EXAMPLE_DOI_1": {
+    "dataset": {
+      "authors": [
+          {
+              "email": "test@author.com", 
+              "firstName": "Test", 
+              "lastName": "Author 1"
+          }
+      ], 
+      "label": "Test Dataset 1", 
+      "landing_url": "http://landing.page.com/1/"
+    }, 
+    "girder": {
+      "api_host": "141.142.208.142", 
+      "api_port": ":8080", 
+      "api_protocol": "http://", 
+      "api_suffix": "/api/v1", 
+      "folder_id": "5813c451bd2af0000156de85", 
+      "guest_pass": "123456", 
+      "guest_user": "admin", 
+      "tmpnb_proxy_port": ""
+    }
   },
-  "test2": {
-    "girder_api_protocol": "http://",
-    "girder_api_host": "141.142.208.127",
-    "girder_api_port": ":8080",
-    "girder_api_suffix": "\/api\/v1",
-    "girder_proxy_port": "",
-    "girder_folder_id": "5814ec2f30c4eb000199d09b",
-    "girder_guest_user": "admin",
-    "girder_guest_pass": "123456"
+  "EXAMPLE_DOI_2": {
+    "dataset": {
+      "authors": [
+          {
+              "email": "test2@author.com", 
+              "firstName": "Test", 
+              "lastName": "Author 2"
+          }
+      ], 
+      "label": "Test Dataset 2", 
+      "landing_url": "http://landing.page.com/2/"
+    }, 
+    "girder": {
+      "api_host": "141.142.208.127", 
+      "api_port": ":8080", 
+      "api_protocol": "http://", 
+      "api_suffix": "/api/v1", 
+      "folder_id": "5814ec2830c4eb000199d09a", 
+      "guest_pass": "123456", 
+      "guest_user": "admin", 
+      "tmpnb_proxy_port": ""
+    }
   }
 }
