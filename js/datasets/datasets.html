@@ -58,5 +58,5 @@
 <div class="alert alert-info" ng-if="selectedMetadata">
   <i class="fa fa-fw fa-times pull-right cursor-pointer" ng-click="viewMetadata(null)"></i>
   <pre ng-if="viewJson">{{ selectedMetadata | json }}</pre>
-  <span ng-if="viewJson">{{ selectedMetadata }}</span>
+  <span ng-if="!viewJson">{{ selectedMetadata }}</span>
 </div>
