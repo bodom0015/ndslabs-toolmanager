@@ -230,4 +230,5 @@ api.add_resource(Resolver, '/resolve/<string:id>')
 # ----------------------------
 
 if __name__ == '__main__':
+    writeNginxConf()
     app.run(host="0.0.0.0", port=int(PORTNUM), debug=True)
