@@ -83,23 +83,25 @@ class Resolver(restful.Resource):
         
         if val is None:
             return "Key not found", 404
+            
+        girder_metadata = val['girder'];
         
         # TODO: Retrieve this from the site metadata
-        girder_api_protocol = val['girder_api_protocol']
-        girder_api_host = val['girder_api_host']
-        girder_api_port = val['girder_api_port']
-        girder_api_suffix = val['girder_api_suffix']
+        girder_api_protocol = girder_metadata['api_protocol']
+        girder_api_host = girder_metadata['api_host']
+        girder_api_port = girder_metadata['api_port']
+        girder_api_suffix = girder_metadata['api_suffix']
         girder_api_uri = girder_api_protocol + girder_api_host + girder_api_port + girder_api_suffix
         
-        girder_proxy_port = val['girder_proxy_port']
+        girder_proxy_port = girder_metadata['tmpnb_proxy_port']
         girder_proxy_uri = girder_api_protocol + girder_api_host + girder_proxy_port + '/'
         
-        girder_folder_id = val['girder_folder_id']
+        girder_folder_id = girder_metadata['folder_id']
         
         # This shared note environment is bad long-term
         # TODO: needs federated auth somehow
-        girder_guest_user = val['girder_guest_user']
-        girder_guest_pass = val['girder_guest_pass']
+        girder_guest_user = girder_metadata['guest_user']
+        girder_guest_pass = girder_metadata['guest_pass']
         
         # TODO: Authenticate
         auth = requests.get(girder_api_uri + '/user/authentication', auth=HTTPBasicAuth(girder_guest_user, girder_guest_pass)).content
