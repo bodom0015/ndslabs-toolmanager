@@ -13,6 +13,9 @@ from jinja2 import Template
 import requests
 from requests.auth import HTTPBasicAuth
 
+# TODO: Comment this out to remove toolserver dependency
+from toolserver import *
+
 app = Flask(__name__) 
 api = restful.Api(app)
 
