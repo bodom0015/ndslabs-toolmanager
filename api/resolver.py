@@ -199,8 +199,7 @@ def getMetadata(id):
         
         
 def addDataset(id, dataset): 
-    # Check for existing metadata for this id
-    # Merge new data with previous, if any existed
+    # TODO: Merge new data with previous, if any existed?
     metadata[str(id)] = dataset
     
     return metadata[str(id)] 
