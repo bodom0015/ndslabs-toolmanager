@@ -24,7 +24,7 @@
           <tr ng-repeat="dataset in datasets | filter:searchQuery">
             <!-- Link to the dataset landing page, or to the data itself if none is provided -->
             <td>
-              <a ng-href="{{ dataset.landing_url || (dataset.metadata.girder.api_protocol + dataset.metadata.girder.api_host + dataset.metadata.girder.api_port) }}" target="_blank">{{ dataset.label || dataset._id }}</a>
+              <a ng-href="{{ dataset.landing_url || (dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port) }}" target="_blank">{{ dataset.label || dataset._id }}</a>
             </td>
             
             <!-- View the dataset metadata -->
@@ -51,7 +51,7 @@
             
             <!-- Link to the launched notebook -->
             <td class="text-center">
-              <a class="btn btn-xs btn-link" ng-href="{{ dataset.metadata.girder.tool_url }}" ng-if="dataset.metadata.girder.tool_url" target="_blank">
+              <a class="btn btn-xs btn-link" ng-href="{{ dataset.girder.tool_url }}" ng-if="dataset.girder.tool_url" target="_blank">
                 View Notebook <i class="fa fa-fw fa-external-link-square"></i>
               </a>
             </td>
