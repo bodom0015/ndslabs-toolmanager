@@ -20,7 +20,7 @@
       <tbody>
         <!--  | filter:searchQuery -->
         <tr ng-repeat="(id, metadata) in datasets">
-          <!-- Link to the dataset -->
+          <!-- Link to the dataset landing page, or to the data itself if none is provided -->
           <td>
             <a ng-href="{{ metadata.dataset.landing_url || (metadata.girder.api_protocol + metadata.girder.api_host + metadata.girder.api_port) }}" target="_blank">{{ metadata.dataset.label || id }}</a>
           </td>

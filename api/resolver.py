@@ -25,6 +25,7 @@ PORTNUM = os.getenv('TOOLSERVER_PORT', "8083")
 basePath = '/usr/local'
 metadataPath = basePath + "/data/metadata.json"
 metadata = {}
+dataset_list = []
         
 """Allow remote user to lookup metadata about a particular dataset identifier"""
 class Metadata(restful.Resource):
@@ -79,12 +80,12 @@ class Resolver(restful.Resource):
         
         metadata = readMetadata()
         
-        val = metadata[str(id)]
+        dataset_metadata = metadata[str(id)]
         
-        if val is None:
+        if dataset_metadata is None:
             return "Key not found", 404
             
-        girder_metadata = val['girder'];
+        girder_metadata = dataset_metadata['girder'];
         
         # TODO: Retrieve this from the site metadata
         girder_api_protocol = girder_metadata['api_protocol']
@@ -186,21 +187,22 @@ class Resolver(restful.Resource):
             "notebook": notebook, 
             "url": girder_proxy_uri + notebook['containerPath'] 
         }, 302
-            
-def getMetadata(id):
-    metadata = readMetadata()
-    
-    val = metadata[str(id)]
-    
-    if val is None:
-        return "Key not found", 404
         
-    return val, 200
-        
+def getKnownIds():
+    id_list = []
+    
+    for dataset in dataset_list:
+        id_list.append(dataset.id)
+    
+    return id_list
         
 def addDataset(id, dataset): 
     # TODO: Merge new data with previous, if any existed?
     metadata[str(id)] = dataset
+    
+    #id_list=
+    
+    dataset_list.append
     
     return metadata[str(id)] 
 
