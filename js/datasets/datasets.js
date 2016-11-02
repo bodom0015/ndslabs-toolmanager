@@ -61,6 +61,7 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
       function($log, $scope, $window, Datasets, Resolve, MOCK) {
     
     $scope.selectedMetadata = null;
+    $scope.searchQuery = '';
     
     // TODO: This is ugly and I hate it... should be a filter
     $scope.viewCitation = function(id, metadata) {
