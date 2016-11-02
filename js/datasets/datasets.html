@@ -1,62 +1,64 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="pull-right"></div>
+    
     <h4>Registered Data Sets</h4>
-    <!-- <div class="input-group">
+    
+    <div class="input-group">
       <span class="input-group-addon" id="search-addon"><i class="fa fa-fw fa-search"></i></span>
       <input type="text" class="form-control" placeholder="Search..." aria-describedby="search-addon" ng-model="searchQuery">
-    </div> -->
+    </div>
+    
     <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Identifier</th>
-          <th width="15%" class="text-center">Metadata</th>
-          <th width="15%" class="text-center">Cite Dataset</th>
-          <th width="15%" class="text-center">Launch Notebook</th>
-          <th width="20%"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <!--  | filter:searchQuery -->
-        <tr ng-repeat="(id, metadata) in datasets">
-          <!-- Link to the dataset landing page, or to the data itself if none is provided -->
-          <td>
-            <a ng-href="{{ metadata.dataset.landing_url || (metadata.girder.api_protocol + metadata.girder.api_host + metadata.girder.api_port) }}" target="_blank">{{ metadata.dataset.label || id }}</a>
-          </td>
-          
-          <!-- View the dataset metadata -->
-          <td class="text-center">
-            <button type="button" class="btn btn-info btn-xs"  ng-click="viewMetadata(metadata)">
-              <i class="fa fa-fw fa-code"></i>
-            </button>
-          </td>
-          
-          <!-- View the dataset's citation -->
-          <td class="text-center">
-            <button type="button" class="btn btn-info btn-xs"  ng-click="viewCitation(id, metadata)">
-              <i class="fa fa-fw fa-paperclip"></i>
-            </button>
-          </td>
-          
-          <!-- Launch a notebook -->
-          <td class="text-center">
-            <button class="btn btn-xs btn-primary" ng-click="resolve(id)" ng-if="!resolving[id]">
-              <i class="fa fa-fw fa-play"></i>
-            </button>
-            <i class="fa fa-fw fa-spinner fa-pulse" ng-if="resolving[id]"></i>
-          </td>
-          
-          <!-- Link to the launched notebook -->
-          <td class="text-center">
-            <a class="btn btn-xs btn-link" ng-href="{{ metadata.girder.tool_url }}" ng-if="metadata.girder.tool_url" target="_blank">
-              View Notebook <i class="fa fa-fw fa-external-link-square"></i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Identifier</th>
+            <th width="15%" class="text-center">Metadata</th>
+            <th width="15%" class="text-center">Cite Dataset</th>
+            <th width="15%" class="text-center">Launch Notebook</th>
+            <th width="20%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="dataset in datasets | filter:searchQuery">
+            <!-- Link to the dataset landing page, or to the data itself if none is provided -->
+            <td>
+              <a ng-href="{{ dataset.landing_url || (dataset.metadata.girder.api_protocol + dataset.metadata.girder.api_host + dataset.metadata.girder.api_port) }}" target="_blank">{{ dataset.label || dataset.id }}</a>
+            </td>
+            
+            <!-- View the dataset metadata -->
+            <td class="text-center">
+              <button type="button" class="btn btn-info btn-xs"  ng-click="viewMetadata(dataset.metadata)">
+                <i class="fa fa-fw fa-code"></i>
+              </button>
+            </td>
+            
+            <!-- View the dataset's citation -->
+            <td class="text-center">
+              <button type="button" class="btn btn-info btn-xs"  ng-click="viewCitation(dataset)">
+                <i class="fa fa-fw fa-paperclip"></i>
+              </button>
+            </td>
+            
+            <!-- Launch a notebook -->
+            <td class="text-center">
+              <button class="btn btn-xs btn-primary" ng-click="resolve(id)" ng-if="!resolving[dataset.id]">
+                <i class="fa fa-fw fa-play"></i>
+              </button>
+              <i class="fa fa-fw fa-spinner fa-pulse" ng-if="resolving[dataset.id]"></i>
+            </td>
+            
+            <!-- Link to the launched notebook -->
+            <td class="text-center">
+              <a class="btn btn-xs btn-link" ng-href="{{ dataset.metadata.girder.tool_url }}" ng-if="dataset.metadata.girder.tool_url" target="_blank">
+                View Notebook <i class="fa fa-fw fa-external-link-square"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 

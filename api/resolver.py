@@ -22,39 +22,42 @@ api = restful.Api(app)
 logging.basicConfig(level=logging.DEBUG)
 
 PORTNUM = os.getenv('TOOLSERVER_PORT', "8083")
-basePath = '/usr/local'
+basePath = '.'
 metadataPath = basePath + "/data/metadata.json"
-metadata = {}
+#metadata = {}
 dataset_list = []
         
 """Allow remote user to lookup metadata about a particular dataset identifier"""
 class Metadata(restful.Resource):
     def get(self):
         logging.debug("Datasets.get")
-        metadata = readMetadata()
+        
+        #metadata = readMetadata()
+        dataset_list = readMetadata()
         
         id = request.args.get('id')
         
         if id is not None:
-            return metadata[str(id)], 200
+            return getDataset(id), 200
         else:
-            return metadata, 200
+            return dataset_list, 200
     
     def post(self):
         logging.debug("Datasets.post")
 
         # Read known metadata into memory
-        metadata = readMetadata()
+        #metadata = readMetadata()
+        dataset_list = readMetadata()
 
         # Parse POST body into JSON
         json_data = request.get_json(force=True)
         logging.debug(metadata)
         
         if type(json_data) is dict:
-            addDataset(json_data['id'], json_data['metadata'])
+            addDataset(json_data)
         elif type(json_data) is list:
             for dataset in json_data:
-                addDataset(dataset['id'], dataset['metadata'])
+                addDataset(dataset)
         else:
             logging.error("Unexpected POST body encountered: " + type(json_data))
             return
@@ -78,12 +81,13 @@ class Resolver(restful.Resource):
     def get(self, id):
         logging.debug("Resolver.get")
         
-        metadata = readMetadata()
-        
-        dataset_metadata = metadata[str(id)]
+        #metadata = readMetadata()
+        dataset_list = readMetadata()
         
         if dataset_metadata is None:
             return "Key not found", 404
+            
+        dataset_metadata = getDataset(id)
             
         girder_metadata = dataset_metadata['girder'];
         
@@ -188,41 +192,46 @@ class Resolver(restful.Resource):
             "url": girder_proxy_uri + notebook['containerPath'] 
         }, 302
         
-def getKnownIds():
-    id_list = []
-    
+def getDataset(id):
     for dataset in dataset_list:
-        id_list.append(dataset.id)
-    
-    return id_list
+        if str(dataset['_id']) == str(id):
+            return dataset
+            
+    return None
         
-def addDataset(id, dataset): 
-    # TODO: Merge new data with previous, if any existed?
-    metadata[str(id)] = dataset
+def addDataset(dataset):
+    # Search for existing id
+    id = str(dataset['_id'])
+    existing_dataset = getDataset(id)
     
-    #id_list=
+    # Remove old item if it exists
+    if existing_dataset is not None:
+        dataset_list.remove(target_item)
     
-    dataset_list.append
+    # Add a new entry to the dataset_list
+    dataset_list.append(dataset)
+    #metadata[id] = dataset['metadata']
     
-    return metadata[str(id)] 
+    return dataset #metadata[id]
 
 # Read metadata from file
 def readMetadata(path=metadataPath):
     logging.debug("readMetadata " + path)
-    mdFile = open(path)
-    metadataJson = mdFile.read()
-    mdFile.close()
-    return json.loads(metadataJson)
+    dsFile = open(path)
+    datasetsJson = dsFile.read()
+    dsFile.close()
+    return json.loads(datasetsJson)
 
 # Write current metadata store to file
 def writeMetadata(path=metadataPath):
     logging.debug("writeMetadata " + path)
-    mdFile = open(path, 'w')
-    mdFile.write(json.dumps(metadata, indent=2, sort_keys=True))
-    mdFile.close()
+    dsFile = open(path, 'w')
+    dsFile.write(json.dumps(dataset_list, indent=2, sort_keys=False))
+    dsFile.close()
     return
 
-metadata = readMetadata()
+#metadata = readMetadata()
+dataset_list = readMetadata()
 
 # /datasets is for querying and updating dataset metadata from other sites
 api.add_resource(Metadata, '/datasets')

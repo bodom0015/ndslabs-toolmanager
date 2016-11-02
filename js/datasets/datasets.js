@@ -34,10 +34,12 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
  * POST /datasets                   => Import dataset or datasets ids/metadata provided in the POST body
  *    Expected Body: object or array of objects containing only the following two fields:
  *        -id: the string identifier of a metadata record
+ *        -label: the friendly name to give this dataset
+ *        -authors: array of authors of this dataset
+ *        -landing_url: url to the landing page for this dataset
  *        -metadata: a JSON object containing any necessary information needed to launch the record
  *              (i.e. capabilities, urls, guest user credentials, etc.)
  * 
- * NOTE: all other fields on POST body will be ignored
  */
 .factory('Datasets', [ '$resource', function($resource) {
   return $resource('/api/datasets', {});
@@ -64,30 +66,28 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
     $scope.searchQuery = '';
     
     // TODO: This is ugly and I hate it... should be a filter
-    $scope.viewCitation = function(id, metadata) {
+    $scope.viewCitation = function(dataset) {
       $scope.viewJson = false;
       var citation = '';
       
-      if (metadata.dataset) {
-        // Loop over authors and append them
-        if (metadata.dataset.authors) {
-          citation += 'Authors: ';
-          angular.forEach(metadata.dataset.authors, function(author) {
-            if (author !== metadata.dataset.authors[0]) {
-              citation += ', '
-            }
-            citation += author.lastName + ', ' + author.firstName + ' (' + author.email + '), ';
-          });
-        }
-        
-        // Append dataset label
-        if (metadata.dataset.label) {
-          citation += '"' + metadata.dataset.label + '", ';
-        }
+      // Loop over authors and append them
+      if (dataset.authors) {
+        citation += 'Authors: ';
+        angular.forEach(dataset.authors, function(author) {
+          if (author !== dataset.authors[0]) {
+            citation += ', '
+          }
+          citation += author.lastName + ', ' + author.firstName + ' (' + author.email + '), ';
+        });
+      }
+      
+      // Append dataset label
+      if (dataset.label) {
+        citation += '"' + dataset.label + '", ';
       }
       
       // Append ID / DOI link
-      citation += id;
+      citation += dataset._id;
       
       $scope.selectedMetadata = citation;
     };

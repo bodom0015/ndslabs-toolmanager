@@ -1,16 +1,15 @@
-{
-  "EXAMPLE_DOI_1": {
-    "dataset": {
-      "authors": [
-          {
-              "email": "test@author.com", 
-              "firstName": "Test", 
-              "lastName": "Author 1"
-          }
-      ], 
-      "label": "Test Dataset 1", 
-      "landing_url": "http://landing.page.com/1/"
-    }, 
+[
+  {
+    "_id": "EXAMPLE_DOI_1",
+    "authors": [
+      {
+        "email": "test@author.com", 
+        "firstName": "Test", 
+        "lastName": "Author 1"
+      }
+    ], 
+    "label": "Test Dataset 1", 
+    "landing_url": "http://landing.page.com/1/",
     "girder": {
       "api_host": "141.142.208.142", 
       "api_port": ":8080", 
@@ -21,19 +20,18 @@
       "guest_user": "admin", 
       "tmpnb_proxy_port": ""
     }
-  },
-  "EXAMPLE_DOI_2": {
-    "dataset": {
-      "authors": [
-          {
-              "email": "test2@author.com", 
-              "firstName": "Test", 
-              "lastName": "Author 2"
-          }
-      ], 
-      "label": "Test Dataset 2", 
-      "landing_url": "http://landing.page.com/2/"
-    }, 
+  }, 
+  {
+    "_id": "EXAMPLE_DOI_2",
+    "authors": [
+      {
+        "email": "test2@author.com", 
+        "firstName": "Test", 
+        "lastName": "Author 2"
+      }
+    ], 
+    "label": "Test Dataset 2", 
+    "landing_url": "http://landing.page.com/2/",
     "girder": {
       "api_host": "141.142.208.127", 
       "api_port": ":8080", 
@@ -45,4 +43,4 @@
       "tmpnb_proxy_port": ""
     }
   }
-}
+]
