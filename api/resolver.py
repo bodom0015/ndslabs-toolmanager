@@ -205,7 +205,7 @@ def addDataset(dataset):
     
     # Remove old item if it exists
     if existing_dataset is not None:
-        dataset_list.remove(target_item)
+        dataset_list.remove(existing_dataset)
     
     # Add a new entry to the dataset_list
     dataset_list.append(dataset)
