@@ -6,7 +6,7 @@
 angular.module('toolmgr', [
   'ngRoute',
   'toolmgr.datasets',
-  'toolmgr.tools',
+  /*'toolmgr.tools',*/
   /*'toolmgr.instances'*/
 ])
 
