@@ -51,7 +51,6 @@ class Metadata(restful.Resource):
 
         # Parse POST body into JSON
         json_data = request.get_json(force=True)
-        logging.debug(metadata)
         
         if type(json_data) is dict:
             addDataset(json_data)
@@ -84,10 +83,10 @@ class Resolver(restful.Resource):
         #metadata = readMetadata()
         dataset_list = readMetadata()
         
+        dataset_metadata = getDataset(id)
+        
         if dataset_metadata is None:
             return "Key not found", 404
-            
-        dataset_metadata = getDataset(id)
             
         girder_metadata = dataset_metadata['girder'];
         
@@ -212,7 +211,7 @@ def addDataset(dataset):
     dataset_list.append(dataset)
     #metadata[id] = dataset['metadata']
     
-    return dataset #metadata[id]
+    return dataset
 
 # Read metadata from file
 def readMetadata(path=metadataPath):
