@@ -24,12 +24,12 @@
           <tr ng-repeat="dataset in datasets | filter:searchQuery">
             <!-- Link to the dataset landing page, or to the data itself if none is provided -->
             <td>
-              <a ng-href="{{ dataset.landing_url || (dataset.metadata.girder.api_protocol + dataset.metadata.girder.api_host + dataset.metadata.girder.api_port) }}" target="_blank">{{ dataset.label || dataset.id }}</a>
+              <a ng-href="{{ dataset.landing_url || (dataset.metadata.girder.api_protocol + dataset.metadata.girder.api_host + dataset.metadata.girder.api_port) }}" target="_blank">{{ dataset.label || dataset._id }}</a>
             </td>
             
             <!-- View the dataset metadata -->
             <td class="text-center">
-              <button type="button" class="btn btn-info btn-xs"  ng-click="viewMetadata(dataset.metadata)">
+              <button type="button" class="btn btn-info btn-xs"  ng-click="viewMetadata(dataset)">
                 <i class="fa fa-fw fa-code"></i>
               </button>
             </td>
@@ -43,10 +43,10 @@
             
             <!-- Launch a notebook -->
             <td class="text-center">
-              <button class="btn btn-xs btn-primary" ng-click="resolve(id)" ng-if="!resolving[dataset.id]">
+              <button class="btn btn-xs btn-primary" ng-click="resolve(dataset._id)" ng-if="!resolving[dataset._id]">
                 <i class="fa fa-fw fa-play"></i>
               </button>
-              <i class="fa fa-fw fa-spinner fa-pulse" ng-if="resolving[dataset.id]"></i>
+              <i class="fa fa-fw fa-spinner fa-pulse" ng-if="resolving[dataset._id]"></i>
             </td>
             
             <!-- Link to the launched notebook -->
