@@ -2,10 +2,10 @@
   <div class="col-sm-12">
     <div class="pull-right"></div>
     <h4>Registered Data Sets</h4>
-    <div class="input-group">
+    <!-- <div class="input-group">
       <span class="input-group-addon" id="search-addon"><i class="fa fa-fw fa-search"></i></span>
       <input type="text" class="form-control" placeholder="Search..." aria-describedby="search-addon" ng-model="searchQuery">
-    </div>
+    </div> -->
     <div class="table-responsive">
     <table class="table">
       <thead>
@@ -18,7 +18,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="(id, metadata) in datasets | filter:searchQuery">
+        <!--  | filter:searchQuery -->
+        <tr ng-repeat="(id, metadata) in datasets">
           <!-- Link to the dataset -->
           <td>
             <a ng-href="{{ metadata.dataset.landing_url || (metadata.girder.api_protocol + metadata.girder.api_host + metadata.girder.api_port) }}" target="_blank">{{ metadata.dataset.label || id }}</a>
