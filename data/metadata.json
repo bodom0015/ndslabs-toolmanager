@@ -37,7 +37,7 @@
       "api_port": ":8080", 
       "api_protocol": "http://", 
       "api_suffix": "/api/v1", 
-      "folder_id": "5814ec2830c4eb000199d09a", 
+      "folder_id": "5814ec2f30c4eb000199d09b", 
       "guest_pass": "123456", 
       "guest_user": "admin", 
       "tmpnb_proxy_port": ""
