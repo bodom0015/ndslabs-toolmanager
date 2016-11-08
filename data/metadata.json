@@ -37,13 +37,13 @@
         "lastName": "Wise"
       },
       {
-        "firstName": "Hao,
+        "firstName": "Hao",
         "lastName": "Xu"
       },
       {
         "firstName": "Michael",
         "lastName": "Norman"
-      },
+      }
     ],
     "girder": {
       "api_host": "132.249.238.217",
