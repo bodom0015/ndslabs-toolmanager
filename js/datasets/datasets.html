@@ -26,17 +26,16 @@
             <td>
               <a ng-href="{{ dataset.landing_url || (dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port) }}" target="_blank">{{ dataset.label || dataset._id }}</a>
               <p ng-if="dataset.publications">
-                Publications:
                 <ul>
-                  <li ng-repeat="publication in dataset.publications">
-                    <a ng-href="{{ publication.url }}">{{ publication.doi || publication.url }}</a>
+                  <li ng-repeat="url in dataset.publications">
+                    <a ng-href="{{ url }}">{{ url }}</a>
                   </li>
                 </ul>
               </p>
             </td>
             
             <!-- View the dataset metadata -->
-            <td class="text-center">
+            <td class="text-center" ng-if="DEBUG">
               <button type="button" class="btn btn-info btn-xs"  ng-click="viewMetadata(dataset)">
                 <i class="fa fa-fw fa-code"></i>
               </button>

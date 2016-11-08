@@ -1,46 +1,106 @@
 [
   {
-    "_id": "EXAMPLE_DOI_1",
+    "_id": "FAKE_MHD_DOI",
     "authors": [
       {
-        "email": "test@author.com", 
-        "firstName": "Test", 
-        "lastName": "Author 1"
+        "email": "pmoesta@berkeley.edu",
+        "firstName": "Philipp",
+        "lastName": "Moesta"
       }
-    ], 
-    "label": "Test Dataset 1", 
-    "landing_url": "http://landing.page.com/1/",
+    ],
     "girder": {
-      "api_host": "141.142.208.142", 
-      "api_port": ":8080", 
-      "api_protocol": "http://", 
-      "api_suffix": "/api/v1", 
-      "folder_id": "5813c451bd2af0000156de85", 
-      "guest_pass": "123456", 
-      "guest_user": "admin", 
+      "api_host": "141.142.208.127",
+      "api_port": ":8080",
+      "api_protocol": "http://",
+      "api_suffix": "/api/v1",
+      "folder_id": "5820f747733d8c0001322448",
+      "guest_pass": "123456",
+      "guest_user": "admin",
       "tmpnb_proxy_port": ""
-    }
-  }, 
+    },
+    "label": "MHD Turbulence in Core-Collapse Supernovae"
+  },
   {
-    "_id": "EXAMPLE_DOI_2",
+    "_id": "FAKE_RS_DOI",
     "authors": [
       {
-        "email": "test2@author.com", 
-        "firstName": "Test", 
-        "lastName": "Author 2"
-      }
-    ], 
-    "label": "Test Dataset 2", 
-    "landing_url": "http://landing.page.com/2/",
+        "email": "oshea@msu.edu",
+        "firstName": "Brian",
+        "lastName": "O'Shea"
+      },
+      {
+        "firstName": "John",
+        "lastName": "Wise"
+      },
+      {
+        "firstName": "Hao,
+        "lastName": "Xu"
+      },
+      {
+        "firstName": "Michael",
+        "lastName": "Norman"
+      },
+    ],
     "girder": {
-      "api_host": "141.142.208.127", 
-      "api_port": ":8080", 
-      "api_protocol": "http://", 
-      "api_suffix": "/api/v1", 
-      "folder_id": "5814ec2f30c4eb000199d09b", 
-      "guest_pass": "123456", 
-      "guest_user": "admin", 
+      "api_host": "132.249.238.217",
+      "api_port": ":8080",
+      "api_protocol": "http://",
+      "api_suffix": "/api/v1",
+      "folder_id": "582110491f39190001ddb992",
+      "guest_pass": "admin",
+      "guest_user": "password",
       "tmpnb_proxy_port": ""
-    }
+    },
+    "label": "Probing the Ultraviolet Luminosity Function of the Earliest Galaxies with the Renaissance Simulations"
+  },
+  {
+    "_id": "FAKE_DS_DOI", 
+    "authors": [
+        {
+            "firstName": "Michael", 
+            "lastName": "Warren"
+        }, 
+        {
+            "firstName": "Alexander", 
+            "lastName": "Friedland"
+        }, 
+        {
+            "firstName": "Daniel", 
+            "lastName": "Holz"
+        }, 
+        {
+            "firstName": "Samuel", 
+            "lastName": "Skillman"
+        }, 
+        {
+            "firstName": "Paul", 
+            "lastName": "Sutter"
+        }, 
+        {
+            "email": "mjturk@illinois.edu", 
+            "firstName": "Matthew", 
+            "lastName": "Turk"
+        }, 
+        {
+            "firstName": "Risa", 
+            "lastName": "Wechsler"
+        }
+    ], 
+    "girder": {
+        "api_host": "girder.hub.yt", 
+        "api_port": "", 
+        "api_protocol": "https://", 
+        "api_suffix": "/api/v1", 
+        "folder_id": "578506ed45acc80001195e4d", 
+        "guest_pass": "8<)HH+{#b*", 
+        "guest_user": "willis8", 
+        "tmpnb_proxy_port": ""
+    }, 
+    "label": "Dark Sky Simulation", 
+    "publications": [
+        "http://dx.doi.org/10.5281/zenodo.10777", 
+        "https://zenodo.org/record/10777#.V_VvKtwcK1M", 
+        "https://arxiv.org/abs/1407.2600"
+    ]
   }
 ]
