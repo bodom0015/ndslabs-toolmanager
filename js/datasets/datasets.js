@@ -82,7 +82,7 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
           if (author !== dataset.authors[0]) {
             citation += ', '
           }
-          citation += author.lastName + ', ' + author.firstName + ' (' + author.email + '), ';
+          citation += author.lastName + ', ' + author.firstName + (author.email ? ' (' + author.email + '); ' : ';');
         });
       }
       
