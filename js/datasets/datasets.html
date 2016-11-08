@@ -14,9 +14,8 @@
         <thead>
           <tr>
             <th>Dataset Identifier</th>
-            <th>Publications</th>
+            <th width="20%">Publications</th>
             <th width="15%" class="text-center" ng-if="DEBUG">Metadata</th>
-            <th width="15%" class="text-center">Cite Dataset</th>
             <th width="15%" class="text-center">Launch Notebook</th>
             <th width="20%"></th>
           </tr>
@@ -48,13 +47,6 @@
             <td class="text-center" ng-if="DEBUG">
               <button type="button" class="btn btn-info btn-xs"  ng-click="viewMetadata(dataset)">
                 <i class="fa fa-fw fa-code"></i>
-              </button>
-            </td>
-            
-            <!-- View the dataset's citation -->
-            <td class="text-center">
-              <button type="button" class="btn btn-info btn-xs"  ng-click="viewCitation(dataset)">
-                <i class="fa fa-fw fa-paperclip"></i>
               </button>
             </td>
             
