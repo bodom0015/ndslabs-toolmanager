@@ -17,7 +17,7 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
 /**
  * Offer full metadata listing
  */
-.constant('DEBUG', true)
+.constant('DEBUG', false)
 
 /**
  * Configure "Resolve" REST API Client
@@ -61,24 +61,31 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
   });
 }])
 
+.filter('authors', [ function() {
+  return function(dataset) {
+    // Loop over authors and append them
+    if (!dataset.authors) {
+      return "";
+    }
+    
+    var authorsList = '';
+    angular.forEach(dataset.authors, function(author) {
+      if (author !== dataset.authors[0]) {
+        authorsList += '; '
+      }
+      authorsList += author.lastName + ', ' + author.firstName + (author.email ? ' (' + author.email + ')' : '');
+    });
+    
+    return authorsList;
+  };
+}])
+
 .filter('citation', [ function() {
   return function(dataset) {
       var citation = '';
-      
-      // Loop over authors and append them
-      if (dataset.authors) {
-        citation += 'Authors: ';
-        angular.forEach(dataset.authors, function(author) {
-          if (author !== dataset.authors[0]) {
-            citation += '; '
-          }
-          citation += author.lastName + ', ' + author.firstName + (author.email ? ' (' + author.email + ') ' : '');
-        });
-      }
-      
       // Append dataset label
       if (dataset.label) {
-        citation += '"' + dataset.label + '", ';
+        citation += ', "' + dataset.label + '", ';
       }
       
       // Append ID / DOI link

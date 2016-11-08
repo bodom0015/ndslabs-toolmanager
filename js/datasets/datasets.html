@@ -13,7 +13,8 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Identifier</th>
+            <th>Dataset Identifier</th>
+            <th>Publications</th>
             <th width="15%" class="text-center" ng-if="DEBUG">Metadata</th>
             <th width="15%" class="text-center">Cite Dataset</th>
             <th width="15%" class="text-center">Launch Notebook</th>
@@ -24,8 +25,16 @@
           <tr ng-repeat="dataset in datasets | filter:searchQuery">
             <!-- Link to the dataset landing page, or to the data itself if none is provided -->
             <td>
-              <a ng-href="{{ dataset.landing_url || (dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port) }}" target="_blank">{{ dataset.label || dataset._id }}</a>
-              <div class="alert alert-info" role="alert">{{ dataset | citation }}</div>
+              <div class="alert alert-info" role="alert">
+                <p>Dataset: {{ dataset._id }}</p>
+                <p>Authors: {{ dataset | authors }}</p>
+                <p><a ng-href="{{ dataset.landing_url || (dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port) }}" target="_blank">
+                  {{ dataset.landing_url || (dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port) }}</a>
+                </p>
+              </div>
+            </td>
+            
+            <td>
               <p ng-if="dataset.publications">
                 <ul>
                   <li ng-repeat="url in dataset.publications">
