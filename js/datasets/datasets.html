@@ -14,7 +14,7 @@
         <thead>
           <tr>
             <th>Identifier</th>
-            <th width="15%" class="text-center">Metadata</th>
+            <th width="15%" class="text-center" ng-if="DEBUG">Metadata</th>
             <th width="15%" class="text-center">Cite Dataset</th>
             <th width="15%" class="text-center">Launch Notebook</th>
             <th width="20%"></th>
@@ -25,6 +25,14 @@
             <!-- Link to the dataset landing page, or to the data itself if none is provided -->
             <td>
               <a ng-href="{{ dataset.landing_url || (dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port) }}" target="_blank">{{ dataset.label || dataset._id }}</a>
+              <p ng-if="dataset.publications">
+                Publications:
+                <ul>
+                  <li ng-repeat="publication in dataset.publications">
+                    <a ng-href="{{ publication.url }}">{{ publication.doi || publication.url }}</a>
+                  </li>
+                </ul>
+              </p>
             </td>
             
             <!-- View the dataset metadata -->

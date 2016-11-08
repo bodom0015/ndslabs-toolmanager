@@ -15,6 +15,11 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
 .constant('MOCK', false)
 
 /**
+ * Offer full metadata listing
+ */
+.constant('DEBUG', true)
+
+/**
  * Configure "Resolve" REST API Client
  * 
  * GET /resolve/<string:id> => lookup metadata about a given id, then use this metadata to launch a notebook next to the data
@@ -59,13 +64,13 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
 /**
  * The controller for our "Datasets" view
  */
-.controller('DatasetsCtrl', [ '$log', '$scope', '$window', 'Datasets', 'Resolve', 'MOCK',
-      function($log, $scope, $window, Datasets, Resolve, MOCK) {
-    
+.controller('DatasetsCtrl', [ '$log', '$scope', '$window', 'Datasets', 'Resolve', 'MOCK', 'DEBUG',
+      function($log, $scope, $window, Datasets, Resolve, MOCK, DEBUG) {
+    $scope.DEBUG = DEBUG;
     $scope.selectedMetadata = null;
     $scope.searchQuery = '';
     
-    // TODO: This is ugly and I hate it... should be a filter
+    // FIXME: This is ugly and I hate it... should be a filter
     $scope.viewCitation = function(dataset) {
       $scope.viewJson = false;
       var citation = '';
