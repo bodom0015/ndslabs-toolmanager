@@ -153,7 +153,7 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
           });
           
           // Open a new tab to the tool
-          // NOTE: Pop-up blocker may prevent this from showing
+          // FIXME: Pop-up blocker may prevent this from showing
           $window.open(response.data.url, '_blank');
           return;
         }

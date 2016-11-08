@@ -10,14 +10,13 @@
     </div>
     
     <div class="table-responsive">
-      <table class="table" style="table-layout:fixed;">
+      <table class="table">
         <thead>
           <tr>
             <th width="30%">Dataset Identifier</th>
-            <th width="20%">Publications</th>
-            <th width="15%" class="text-center" ng-if="DEBUG">Metadata</th>
-            <th width="15%" class="text-center">Launch Notebook</th>
-            <th width="20%"></th>
+            <th width="30%">Publications</th>
+            <th width="10%" class="text-center" ng-if="DEBUG">Metadata</th>
+            <th width="10%" class="text-center">Launch Notebook</th>
           </tr>
         </thead>
         <tbody>
@@ -56,13 +55,6 @@
                 <i class="fa fa-fw fa-play"></i>
               </button>
               <i class="fa fa-fw fa-spinner fa-pulse" ng-if="resolving[dataset._id]"></i>
-            </td>
-            
-            <!-- Link to the launched notebook -->
-            <td class="text-center">
-              <a class="btn btn-xs btn-link" ng-href="{{ dataset.girder.tool_url }}" ng-if="dataset.girder.tool_url" target="_blank">
-                View Notebook <i class="fa fa-fw fa-external-link-square"></i>
-              </a>
             </td>
           </tr>
         </tbody>
