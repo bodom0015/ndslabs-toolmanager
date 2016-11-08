@@ -25,6 +25,7 @@
             <!-- Link to the dataset landing page, or to the data itself if none is provided -->
             <td>
               <a ng-href="{{ dataset.landing_url || (dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port) }}" target="_blank">{{ dataset.label || dataset._id }}</a>
+              <div class="alert alert-info" role="alert">{{ dataset | citation }}</div>
               <p ng-if="dataset.publications">
                 <ul>
                   <li ng-repeat="url in dataset.publications">

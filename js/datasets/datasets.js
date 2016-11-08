@@ -61,18 +61,8 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
   });
 }])
 
-/**
- * The controller for our "Datasets" view
- */
-.controller('DatasetsCtrl', [ '$log', '$scope', '$window', 'Datasets', 'Resolve', 'MOCK', 'DEBUG',
-      function($log, $scope, $window, Datasets, Resolve, MOCK, DEBUG) {
-    $scope.DEBUG = DEBUG;
-    $scope.selectedMetadata = null;
-    $scope.searchQuery = '';
-    
-    // FIXME: This is ugly and I hate it... should be a filter
-    $scope.viewCitation = function(dataset) {
-      $scope.viewJson = false;
+.filter('citation', [ function() {
+  return function(dataset) {
       var citation = '';
       
       // Loop over authors and append them
@@ -80,9 +70,9 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
         citation += 'Authors: ';
         angular.forEach(dataset.authors, function(author) {
           if (author !== dataset.authors[0]) {
-            citation += ', '
+            citation += '; '
           }
-          citation += author.lastName + ', ' + author.firstName + (author.email ? ' (' + author.email + '); ' : ';');
+          citation += author.lastName + ', ' + author.firstName + (author.email ? ' (' + author.email + ') ' : '');
         });
       }
       
@@ -94,8 +84,18 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
       // Append ID / DOI link
       citation += dataset._id;
       
-      $scope.selectedMetadata = citation;
-    };
+      return citation;
+  };
+}])
+
+/**
+ * The controller for our "Datasets" view
+ */
+.controller('DatasetsCtrl', [ '$log', '$scope', '$window', 'Datasets', 'Resolve', 'MOCK', 'DEBUG',
+      function($log, $scope, $window, Datasets, Resolve, MOCK, DEBUG) {
+    $scope.DEBUG = DEBUG;
+    $scope.selectedMetadata = null;
+    $scope.searchQuery = '';
     
     $scope.viewMetadata = function(metadata) {
       $scope.selectedMetadata = metadata;
