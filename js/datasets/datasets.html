@@ -26,8 +26,8 @@
               <div class="alert alert-info" role="alert">
                 <p>Dataset: {{ dataset._id }}</p>
                 <p>Authors: {{ dataset | authors }}</p>
-                <p><a ng-href="{{ dataset.landing_url || (dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port) }}" target="_blank">
-                  {{ dataset.landing_url || (dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port + '/#collection/' + dataset.girder.collection_id + '/folder/' + dataset.girder.folder_id) }}</a>
+                <p><a ng-href="{{ dataset.landing_url || (dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port + '/#collection/' + dataset.girder.collection_id + '/folder/' + dataset.girder.folder_id) }}" target="_blank">
+                  {{ dataset.landing_url || (dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port) }}</a>
                 </p>
               </div>
             </td>
