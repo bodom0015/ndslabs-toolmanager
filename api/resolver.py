@@ -24,7 +24,6 @@ logging.basicConfig(level=logging.DEBUG)
 PORTNUM = os.getenv('TOOLSERVER_PORT', "8083")
 basePath = '/usr/local/'
 metadataPath = basePath + "data/metadata.json"
-#metadata = {}
 dataset_list = []
         
 """Allow remote user to lookup metadata about a particular dataset identifier"""
@@ -97,8 +96,10 @@ class Resolver(restful.Resource):
         girder_api_suffix = girder_metadata['api_suffix']
         girder_api_uri = girder_api_protocol + girder_api_host + girder_api_port + girder_api_suffix
         
-        girder_proxy_port = girder_metadata['tmpnb_proxy_port']
-        girder_proxy_uri = girder_api_protocol + girder_api_host + girder_proxy_port + '/'
+        tmpnb_proxy_protocol = girder_metadata['tmpnb_proxy_protocol']
+        tmpnb_proxy_host = girder_metadata['tmpnb_proxy_host']
+        tmpnb_proxy_port = girder_metadata['tmpnb_proxy_port']
+        girder_proxy_uri = (tmpnb_proxy_protocol || girder_api_protocol) + (tmpnb_proxy_host || girder_api_host) + tmpnb_proxy_port + '/'
         
         girder_folder_id = girder_metadata['folder_id']
         
@@ -107,7 +108,7 @@ class Resolver(restful.Resource):
         girder_guest_user = girder_metadata['guest_user']
         girder_guest_pass = girder_metadata['guest_pass']
         
-        # TODO: Authenticate
+        # Authenticate with Girder API
         auth = requests.get(girder_api_uri + '/user/authentication', auth=HTTPBasicAuth(girder_guest_user, girder_guest_pass)).content
         logging.debug(auth)
         
