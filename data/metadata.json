@@ -1,17 +1,21 @@
 [
   {
-    "_id": "FAKE_MHD_DOI",
-    "label": "MHD Turbulence in Core-Collapse Supernovae", 
-    "publications": [
-        "http://dx.doi.org/10.1038/nature15755",
-        "http://www.nature.com/nature/journal/v528/n7582/full/nature15755.html"
-    ],
+    "_id": "http://dx.doi.org/10.1038/nature15755",
+    "label": "Magnetohydrodynamic Turbulence Simulations",
     "authors": [
       {
         "email": "pmoesta@berkeley.edu",
         "firstName": "Philipp",
-        "lastName": "Moesta"
+        "lastName": "Mösta"
       }
+    ],
+    "landingPageUrl": "https://go-bluewaters.ncsa.illinois.edu/globus-app/transfer?origin_id=8fc2bb2a-9712-11e5-9991-22000b96db58&origin_path=%2F",
+    "location" : "https://commons.wikimedia.org/wiki/File:Ncsa_logo.gif",
+    "publications": [
+        {
+            "citation" : "Mösta, P., Ott, C. D., Radice, D., Roberts, L. F., Schnetter, E., & Haas, R. (2015). A large-scale dynamo and magnetoturbulence in rapidly rotating core-collapse supernovae. Nature, 528(7582), 376–379",
+            "url" : "http://dx.doi.org/10.1038/nature15755"
+        }
     ],
     "girder": {
       "api_host": "141.142.208.127",
@@ -23,17 +27,15 @@
       "guest_user": "admin",
       "guest_pass": "123456",
       "tmpnb_proxy_protocol": "http://",
-      "tmpnb_proxy_host": "141.142.208.127", 
+      "tmpnb_proxy_host": "141.142.208.127",
       "tmpnb_proxy_port": ""
     }
   },
   {
-    "_id": "FAKE_RS_DOI",
-    "label": "Probing the Ultraviolet Luminosity Function of the Earliest Galaxies with the Renaissance Simulations", 
-    "publications": [
-        "http://dx.doi.org/10.1088/2041-8205/807/1/L12", 
-        "http://iopscience.iop.org/article/10.1088/2041-8205/807/1/L12/meta;jsessionid=40CF566DDA56AD74A99FE108F573F445.c1.iopscience.cld.iop.org"
-    ],
+    "_id": "http://dx.doi.org/10.1088/2041-8205/807/1/L12",
+    "label": "Renaissance Simulations",
+    "landingPageUrl" : "https://galaxyportal.sdsc.edu/",
+    "location" : "https://6lli539m39y3hpkelqsm3c2fg-wpengine.netdna-ssl.com/wp-content/uploads/2013/07/SDSC-logo-hires.gif",
     "authors": [
       {
         "email": "oshea@msu.edu",
@@ -53,6 +55,40 @@
         "lastName": "Norman"
       }
     ],
+    "publications": [
+        {
+            "citation": "B. W. O'Shea, J. H. Wise, H. Xu, and M. L. Norman. Probing the Ultraviolet Luminosity Function of the Earliest Galaxies with the Renaissance Simulations. ApJL, 807:L12, July 2015.",
+            "url" : "http://dx.doi.org/10.1088/2041-8205/807/1/L12"
+        },
+        {
+            "citation" : "K. Ahn, H. Xu, M. L. Norman, M. A. Alvarez, and J. H. Wise. Spatially Extended 21 cm Signal from Strongly Clustered Uv and X-Ray Sources in the Early Universe. ApJ, 802:8, March 2015. ",
+            "url" : "https://dx.doi.org/10.1088/0004-637X/802/1/8"
+        },
+        {
+            "citation" : "P. Chen, J. H. Wise, M. L. Norman, H. Xu, and B. W. O'Shea. Scaling Relations for Galaxies Prior to Reionization. ApJ, 795:144, November 2014. ",
+            "url" : "https://dx.doi.org/10.1088/0004-637X/795/2/144"
+        },
+        {
+            "citation" : "H. Xu, K. Ahn, J. H. Wise, M. L. Norman, and B. W. O'Shea. Heating the Intergalactic Medium by X-Rays from Population III Binaries in High-redshift Galaxies. ApJ, 791:110, August 2014. ",
+            "url" : "https://dx.doi.org/10.1088/0004-637X/791/2/110"
+        },
+        {
+            "citation" : "J. H. Wise, V. G. Demchenko, M. T. Halicek, M. L. Norman, M. J. Turk, T. Abel, and B. D. Smith. The birth of a galaxy - III. Propelling reionization with the faintest galaxies. MNRAS, 442:2560-2579, August 2014. ",
+            "url" : "https://dx.doi.org/10.1093/mnras/stu979"
+        },
+        {
+            "citation" : "H. Xu, J. H. Wise, and M. L. Norman. Population III Stars and Remnants in High-redshift Galaxies. ApJ, 773:83, August 2013. ",
+            "url" : "https://dx.doi.org/10.1088/0004-637X/773/2/83"
+        },
+        {
+            "citation" : "J. H. Wise, T. Abel, M. J. Turk, M. L. Norman, and B. D. Smith. The birth of a galaxy - II. The role of radiation pressure. MNRAS, 427:311-326, November 2012. ",
+            "url" : "https://dx.doi.org/10.1111/j.1365-2966.2012.21809.x"
+        },
+        {
+            "citation" : "J. H. Wise, M. J. Turk, M. L. Norman, and T. Abel. The Birth of a Galaxy: Primordial Metal Enrichment and Stellar Populations. ApJ, 745:50, January 2012. ",
+            "url" : "https://dx.doi.org/10.1088/0004-637X/745/1/50"
+        }
+    ],
     "girder": {
       "api_host": "132.249.238.219",
       "api_port": ":8080",
@@ -63,60 +99,67 @@
       "guest_user": "admin",
       "guest_pass": "password",
       "tmpnb_proxy_protocol": "http://",
-      "tmpnb_proxy_host": "132.249.238.219", 
+      "tmpnb_proxy_host": "132.249.238.219",
       "tmpnb_proxy_port": ""
     }
   },
   {
-    "_id": "FAKE_DS_DOI", 
-    "label": "Dark Sky Simulation", 
-    "publications": [
-        "http://dx.doi.org/10.5281/zenodo.10777", 
-        "https://zenodo.org/record/10777#.V_VvKtwcK1M", 
-        "https://arxiv.org/abs/1407.2600"
-    ], 
+    "_id": "https://arxiv.org/abs/1407.2600",
+    "label": "Dark Sky Simulations",
+    "landingPageUrl" : "http://darksky.slac.stanford.edu/",
+    "location" : "https://girder.hub.yt/static/built/plugins/ythub/extra/img/yt_logo.png",
     "authors": [
         {
-            "firstName": "Michael", 
+            "firstName": "Michael",
             "lastName": "Warren"
-        }, 
+        },
         {
-            "firstName": "Alexander", 
+            "firstName": "Alexander",
             "lastName": "Friedland"
-        }, 
+        },
         {
-            "firstName": "Daniel", 
+            "firstName": "Daniel",
             "lastName": "Holz"
-        }, 
+        },
         {
-            "firstName": "Samuel", 
+            "firstName": "Samuel",
             "lastName": "Skillman"
-        }, 
+        },
         {
-            "firstName": "Paul", 
+            "firstName": "Paul",
             "lastName": "Sutter"
-        }, 
+        },
         {
-            "email": "mjturk@illinois.edu", 
-            "firstName": "Matthew", 
+            "email": "mjturk@illinois.edu",
+            "firstName": "Matthew",
             "lastName": "Turk"
-        }, 
+        },
         {
-            "firstName": "Risa", 
+            "firstName": "Risa",
             "lastName": "Wechsler"
         }
-    ], 
+    ],
+    "publications": [
+        {
+            "citation" : "S. W. Skillman, M. S. Warren, M. J. Turk, R. H. Wechsler, D. E. Holz, P. M. Sutter. Dark Sky Simulations: Early Data Release.",
+            "url" : "https://arxiv.org/abs/1407.2600"
+        },
+        {
+            "citation" : "M. S. Warren, A. Friedland, D. E. Holz, S. W. Skillman, P. M. Sutter, M. J. Turk, R. H. Wechsler. Dark Sky Simulations Collaboration.",
+            "url" :   "http://dx.doi.org/10.5281/zenodo.10777"
+        }
+    ],
     "girder": {
-      "api_host": "girder.hub.yt", 
-      "api_port": "", 
-      "api_protocol": "https://", 
-      "api_suffix": "/api/v1", 
-      "collection_id": "578501e0c2a5f40001cec1d6", 
-      "folder_id": "578506ed45acc80001195e4d", 
-      "guest_user": "willis8", 
+      "api_host": "girder.hub.yt",
+      "api_port": "",
+      "api_protocol": "https://",
+      "api_suffix": "/api/v1",
+      "collection_id": "578501e0c2a5f40001cec1d6",
+      "folder_id": "578506ed45acc80001195e4d",
+      "guest_user": "willis8",
       "guest_pass": "8<)HH+{#b*",
       "tmpnb_proxy_protocol": "https://",
-      "tmpnb_proxy_host": "tmpnb.hub.yt", 
+      "tmpnb_proxy_host": "tmpnb.hub.yt",
       "tmpnb_proxy_port": ""
     }
   }
