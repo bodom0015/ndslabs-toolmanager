@@ -96,10 +96,10 @@ class Resolver(restful.Resource):
         girder_api_suffix = girder_metadata['api_suffix']
         girder_api_uri = girder_api_protocol + girder_api_host + girder_api_port + girder_api_suffix
         
-        tmpnb_proxy_protocol = girder_metadata['tmpnb_proxy_protocol']
-        tmpnb_proxy_host = girder_metadata['tmpnb_proxy_host']
-        tmpnb_proxy_port = girder_metadata['tmpnb_proxy_port']
-        girder_proxy_uri = (tmpnb_proxy_protocol || girder_api_protocol) + (tmpnb_proxy_host || girder_api_host) + tmpnb_proxy_port + '/'
+        tmpnb_proxy_protocol = girder_metadata.get('tmpnb_proxy_protocol', girder_api_protocol)
+        tmpnb_proxy_host = girder_metadata.get('tmpnb_proxy_host', girder_api_host)
+        tmpnb_proxy_port = girder_metadata.get('tmpnb_proxy_port', girder_api_port)
+        girder_proxy_uri = tmpnb_proxy_protocol + tmpnb_proxy_host + tmpnb_proxy_port + '/'
         
         girder_folder_id = girder_metadata['folder_id']
         

@@ -20,8 +20,8 @@
       "api_suffix": "/api/v1",
       "collection_id": "5820f740733d8c0001322447",
       "folder_id": "5820f747733d8c0001322448",
-      "guest_pass": "123456",
       "guest_user": "admin",
+      "guest_pass": "123456",
       "tmpnb_proxy_port": ""
     }
   },
