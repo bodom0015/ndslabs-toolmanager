@@ -84,7 +84,7 @@ class Resolver(restful.Resource):
         dataset_list = readMetadata()
         
         # Decode id from URI format
-        dataset_metadata = getDataset(urllib.decode(id))
+        dataset_metadata = getDataset(urllib.unquote(id))
         
         if dataset_metadata is None:
             return "Key not found", 404
