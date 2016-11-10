@@ -1,37 +1,5 @@
 [
   {
-    "_id": "http://dx.doi.org/10.1038/nature15755",
-    "label": "Magnetohydrodynamic Turbulence Simulations",
-    "authors": [
-      {
-        "email": "pmoesta@berkeley.edu",
-        "firstName": "Philipp",
-        "lastName": "Mösta"
-      }
-    ],
-    "landingPageUrl": "https://go-bluewaters.ncsa.illinois.edu/globus-app/transfer?origin_id=8fc2bb2a-9712-11e5-9991-22000b96db58&origin_path=%2F",
-    "location" : "https://upload.wikimedia.org/wikipedia/commons/a/a1/Ncsa_logo.gif",
-    "publications": [
-        {
-            "citation" : "Mösta, P., Ott, C. D., Radice, D., Roberts, L. F., Schnetter, E., & Haas, R. (2015). A large-scale dynamo and magnetoturbulence in rapidly rotating core-collapse supernovae. Nature, 528(7582), 376–379",
-            "url" : "http://dx.doi.org/10.1038/nature15755"
-        }
-    ],
-    "girder": {
-      "api_host": "141.142.208.127",
-      "api_port": ":8080",
-      "api_protocol": "http://",
-      "api_suffix": "/api/v1",
-      "collection_id": "5820f740733d8c0001322447",
-      "folder_id": "5820f747733d8c0001322448",
-      "guest_user": "admin",
-      "guest_pass": "123456",
-      "tmpnb_proxy_protocol": "http://",
-      "tmpnb_proxy_host": "141.142.208.127",
-      "tmpnb_proxy_port": ""
-    }
-  },
-  {
     "_id": "http://dx.doi.org/10.1088/2041-8205/807/1/L12",
     "label": "Renaissance Simulations",
     "landingPageUrl" : "https://galaxyportal.sdsc.edu/",
@@ -160,6 +128,38 @@
       "guest_pass": "8<)HH+{#b*",
       "tmpnb_proxy_protocol": "https://",
       "tmpnb_proxy_host": "tmpnb.hub.yt",
+      "tmpnb_proxy_port": ""
+    }
+  },
+  {
+    "_id": "http://dx.doi.org/10.1038/nature15755",
+    "label": "Magnetohydrodynamic Turbulence Simulations",
+    "authors": [
+      {
+        "email": "pmoesta@berkeley.edu",
+        "firstName": "Philipp",
+        "lastName": "Mösta"
+      }
+    ],
+    "landingPageUrl": "https://go-bluewaters.ncsa.illinois.edu/globus-app/transfer?origin_id=8fc2bb2a-9712-11e5-9991-22000b96db58&origin_path=%2F",
+    "location" : "https://upload.wikimedia.org/wikipedia/commons/a/a1/Ncsa_logo.gif",
+    "publications": [
+        {
+            "citation" : "Mösta, P., Ott, C. D., Radice, D., Roberts, L. F., Schnetter, E., & Haas, R. (2015). A large-scale dynamo and magnetoturbulence in rapidly rotating core-collapse supernovae. Nature, 528(7582), 376–379",
+            "url" : "http://dx.doi.org/10.1038/nature15755"
+        }
+    ],
+    "girder": {
+      "api_host": "141.142.208.127",
+      "api_port": ":8080",
+      "api_protocol": "http://",
+      "api_suffix": "/api/v1",
+      "collection_id": "5820f740733d8c0001322447",
+      "folder_id": "5820f747733d8c0001322448",
+      "guest_user": "admin",
+      "guest_pass": "123456",
+      "tmpnb_proxy_protocol": "http://",
+      "tmpnb_proxy_host": "141.142.208.127",
       "tmpnb_proxy_port": ""
     }
   }
