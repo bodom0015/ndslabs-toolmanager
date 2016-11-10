@@ -23,7 +23,7 @@ api = restful.Api(app)
 logging.basicConfig(level=logging.DEBUG)
 
 PORTNUM = os.getenv('TOOLSERVER_PORT', "8083")
-basePath = './'
+basePath = '/usr/local/'
 metadataPath = basePath + "data/metadata.json"
 dataset_list = []
         
