@@ -133,7 +133,7 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
     $scope.resolve = function(id, dataset) {
       $scope.resolving[id] = true;
       
-      Resolve.get({ id:id }, { /* POST body goes here */ }, function(tool) {
+      Resolve.get({ id: id }, { /* POST body goes here */ }, function(tool) {
        
         $scope.resolving[id] = false;
         $scope.tool = tool;

@@ -3,6 +3,7 @@
 import os, json
 import arrow
 import logging
+import urllib
 import subprocess
 import flask_restful as restful
 from flask import Flask, request
@@ -22,7 +23,7 @@ api = restful.Api(app)
 logging.basicConfig(level=logging.DEBUG)
 
 PORTNUM = os.getenv('TOOLSERVER_PORT', "8083")
-basePath = '/usr/local/'
+basePath = './'
 metadataPath = basePath + "data/metadata.json"
 dataset_list = []
         
@@ -82,6 +83,7 @@ class Resolver(restful.Resource):
         #metadata = readMetadata()
         dataset_list = readMetadata()
         
+        # Decode id from URI format
         dataset_metadata = getDataset(id)
         
         if dataset_metadata is None:
@@ -237,7 +239,7 @@ dataset_list = readMetadata()
 api.add_resource(Metadata, '/datasets')
 
 # Same as /datasets?id=<string>, resolves an ID to the set of associated metadata
-api.add_resource(Resolver, '/resolve/<string:id>')
+api.add_resource(Resolver, '/resolve/<path:id>')
 
 # ----------------------------
 
