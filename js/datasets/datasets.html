@@ -24,7 +24,7 @@
           <tr ng-repeat="dataset in datasets | filter:searchQuery">
             <!-- Link to the dataset landing page, or to the data itself if none is provided -->
             <td width="20%" style="margin:0;">
-              <p style="padding:0;margin:0;"><a ng-href="{{ dataset.landing_url || (dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port + '/#collection/' + dataset.girder.collection_id + '/folder/' + dataset.girder.folder_id) }}" target="_blank">
+              <p style="padding:0;margin:0;"><a ng-href="{{ dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port + '/#collection/' + dataset.girder.collection_id + '/folder/' + dataset.girder.folder_id }}" target="_blank">
                 {{ dataset.label }}</a>
               </p>
               <p style="padding:0;margin:0;">{{ dataset | authors }}</p>
@@ -35,11 +35,11 @@
             <td width="40%">
               <p ng-if="dataset.publications">
                 <ul>
-                  <li ng-repeat="publication in dataset.publications | limitTo:(publication.limit || (publication.limit = 2))">
+                  <li ng-repeat="publication in dataset.publications | limitTo:(publication.limit || 2)">
                     <a ng-href="{{ publication.url }}">{{ publication.datacite || publication.citation }}</a>
                   </li>
                 </ul>
-                <button class="btn btn-xs btn-default pull-right" ng-if="dataset.publications.length > publication.limit" ng-click="publication.limit = publication.limit + 2">More</button>
+                <button class="btn btn-xs btn-default pull-right" ng-if="dataset.publications.length > publication.limit" ng-click="publication.limit = dataset.publications.length">More</button>
               </p>
             </td>
             
