@@ -102,8 +102,8 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
 /**
  * The controller for our "Datasets" view
  */
-.controller('DatasetsCtrl', [ '$log', '$scope', '$http', '$window', 'Datasets', 'Resolve', 'DEBUG',
-      function($log, $scope, $http, $window, Datasets, Resolve, DEBUG) {
+.controller('DatasetsCtrl', [ '$log', '$scope', '$http', '$window','_',  'Datasets', 'Resolve', 'DEBUG',
+      function($log, $scope, $http, $window, _, Datasets, Resolve, DEBUG) {
     $scope.DEBUG = DEBUG;
     $scope.searchQuery = '';
     
@@ -115,12 +115,14 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
       angular.forEach($scope.datasets, function(dataset) {
         angular.forEach(dataset.publications, function(publication) {
           var url = publication.url;
-          $http({method: 'GET', url: url, headers: {'Accept' : 'text/x-bibliography; style=apa'} }).then(function successCallback(response) {
-            publication.datacite = response.data;
-          }, function errorCallback(response) {
-            $log.error('Failed to retrieve trusted citation for: ' + url);
-            console.debug(response);
-          });
+          if (_.includes(url, 'dx.doi.org')) {
+            $http({method: 'GET', url: url, headers: {'Accept' : 'text/x-bibliography; style=apa'} }).then(function successCallback(response) {
+              publication.datacite = response.data;
+            }, function errorCallback(response) {
+              $log.error('Failed to retrieve trusted citation for: ' + url);
+              console.debug(response);
+            });
+          }
         });
       });
     }, function(response) {
@@ -132,7 +134,6 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
     $scope.resolving = {};
     $scope.resolve = function(id, dataset) {
       $scope.resolving[id] = true;
-      
       Resolve.get({ id: encodeURIComponent(id) }, { /* POST body goes here */ }, function(tool) {
        
         $scope.resolving[id] = false;
