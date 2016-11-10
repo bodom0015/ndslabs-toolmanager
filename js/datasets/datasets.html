@@ -13,48 +13,55 @@
       <table class="table">
         <thead>
           <tr>
-            <th width="30%">Dataset Identifier</th>
-            <th width="30%">Publications</th>
-            <th width="10%" class="text-center" ng-if="DEBUG">Metadata</th>
+            <th width="20%">Dataset</th>
+            <th width="40%">Publications</th>
+            <th width="20%" class="text-center">Location</th>
             <th width="10%" class="text-center">Launch Notebook</th>
+            <th width="10%" class="text-center">Show Metrics</th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="dataset in datasets | filter:searchQuery">
             <!-- Link to the dataset landing page, or to the data itself if none is provided -->
-            <td>
-              <div class="alert alert-info" role="alert">
-                <p>Dataset: {{ dataset._id }}</p>
-                <p>Authors: {{ dataset | authors }}</p>
-                <p><a ng-href="{{ dataset.landing_url || (dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port + '/#collection/' + dataset.girder.collection_id + '/folder/' + dataset.girder.folder_id) }}" target="_blank">
-                  {{ dataset.landing_url || (dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port) }}</a>
-                </p>
-              </div>
+            <td width="20%" style="margin:0;">
+              <p style="padding:0;margin:0;"><a ng-href="{{ dataset.landing_url || (dataset.girder.api_protocol + dataset.girder.api_host + dataset.girder.api_port + '/#collection/' + dataset.girder.collection_id + '/folder/' + dataset.girder.folder_id) }}" target="_blank">
+                {{ dataset.label }}</a>
+              </p>
+              <p style="padding:0;margin:0;">{{ dataset | authors }}</p>
+              <br/>
+              <p style="padding:0;margin:0;"><a ng-href="{{ dataset.landing_url ||  dataset._id }}">{{ dataset.description ||  dataset._id }}</a></p>
             </td>
             
-            <td>
+            <td width="40%">
               <p ng-if="dataset.publications">
                 <ul>
-                  <li ng-repeat="url in dataset.publications">
-                    <a ng-href="{{ url }}">{{ url }}</a>
+                  <li ng-repeat="publication in dataset.publications | limitTo:(publication.limit || (publication.limit = 2))">
+                    <a ng-href="{{ publication.url }}">{{ publication.datacite || publication.citation }}</a>
                   </li>
                 </ul>
+                <button class="btn btn-xs btn-default pull-right" ng-if="dataset.publications.length > publication.limit" ng-click="publication.limit = publication.limit + 2">More</button>
               </p>
             </td>
             
-            <!-- View the dataset metadata -->
-            <td class="text-center" ng-if="DEBUG">
-              <button type="button" class="btn btn-info btn-xs"  ng-click="viewMetadata(dataset)">
-                <i class="fa fa-fw fa-code"></i>
-              </button>
+            <!-- LLogo for Location of the Data -->
+            <td class="text-center" width="20%">
+              <img id="locationLogo" ng-src="{{ dataset.location }}" alt="location" style="max-height:128px;max-width:128px;">
             </td>
             
             <!-- Launch a notebook -->
-            <td class="text-center">
+            <td class="text-center" width="10%">
               <button class="btn btn-xs btn-primary" ng-click="resolve(dataset._id)" ng-if="!resolving[dataset._id]">
                 <i class="fa fa-fw fa-play"></i>
               </button>
               <i class="fa fa-fw fa-spinner fa-pulse" ng-if="resolving[dataset._id]"></i>
+            </td>
+            
+            
+            <!-- Show Metrics for this dataset -->
+            <td class="text-center" width="10%">
+              <button class="btn btn-xs btn-info">
+                <i class="fa fa-fw fa-bar-chart"></i>
+              </button>
             </td>
           </tr>
         </tbody>

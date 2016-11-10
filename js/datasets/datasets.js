@@ -46,8 +46,12 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
  *              (i.e. capabilities, urls, guest user credentials, etc.)
  * 
  */
-.factory('Datasets', [ '$resource', function($resource) {
-  return $resource('/api/datasets', {});
+.factory('Datasets', [ '$resource', 'MOCK', function($resource, MOCK) {
+  if (MOCK) {
+    return $resource('./datasets/metadata.json', {});
+  } else {
+    return $resource('/api/datasets', {});
+  }
 }])
 
 
@@ -98,37 +102,32 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
 /**
  * The controller for our "Datasets" view
  */
-.controller('DatasetsCtrl', [ '$log', '$scope', '$window', 'Datasets', 'Resolve', 'MOCK', 'DEBUG',
-      function($log, $scope, $window, Datasets, Resolve, MOCK, DEBUG) {
+.controller('DatasetsCtrl', [ '$log', '$scope', '$http', '$window', 'Datasets', 'Resolve', 'DEBUG',
+      function($log, $scope, $http, $window, Datasets, Resolve, DEBUG) {
     $scope.DEBUG = DEBUG;
-    $scope.selectedMetadata = null;
     $scope.searchQuery = '';
-    
-    $scope.viewMetadata = function(metadata) {
-      $scope.selectedMetadata = metadata;
-      $scope.viewJson = true;
-    };
     
     $scope.datasets = [];
     
     Datasets.query({ /* request parameters go here */ }, function(datasets) {
       $scope.datasets = datasets;
       $log.debug("Successful GET from /datasets!");
+      angular.forEach($scope.datasets, function(dataset) {
+        angular.forEach(dataset.publications, function(publication) {
+          var url = publication.url;
+          $http({method: 'GET', url: url, headers: {'Accept' : 'text/x-bibliography; style=apa'} }).then(function successCallback(response) {
+            publication.datacite = response.data;
+          }, function errorCallback(response) {
+            $log.error('Failed to retrieve trusted citation for: ' + url);
+            console.debug(response);
+          });
+        });
+      });
     }, function(response) {
       $log.debug("Failed GET from /datasets:");
       $log.debug(response);
       console.debug(response);
     });
-    
-    /*
-    Datasets.query({ id: 'EXAMPLE_DOI_1' }, function(datasets) {
-      $scope.datasets = datasets;
-      $log.debug("Successful GET from /datasets!");
-    }, function(response) {
-      $log.debug("Failed GET from /datasets:");
-      $log.debug(response);
-      console.debug(response);
-    });*/
     
     $scope.resolving = {};
     $scope.resolve = function(id, dataset) {
