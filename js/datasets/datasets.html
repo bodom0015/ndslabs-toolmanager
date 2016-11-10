@@ -35,11 +35,12 @@
             <td width="40%">
               <p ng-if="dataset.publications">
                 <ul>
-                  <li ng-repeat="publication in dataset.publications | limitTo:(publication.limit || 2)">
+                  <li ng-repeat="publication in dataset.publications | limitTo:(publication.limit || (publication.limit = 2))">
                     <a ng-href="{{ publication.url }}">{{ publication.datacite || publication.citation }}</a>
                   </li>
                 </ul>
-                <button class="btn btn-xs btn-default pull-right" ng-if="!publication.limit" ng-click="publication.limit = dataset.publications.length">More</button>
+                <button class="btn btn-xs btn-default pull-right" ng-if="dataset.publications.length > publication.limit" 
+                    ng-click="publication.limit = dataset.publications.length">More</button>
               </p>
             </td>
             
