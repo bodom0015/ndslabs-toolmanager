@@ -94,6 +94,8 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
     $(function () {
       $('[data-toggle="popover"]').popover()
     });
+    
+    $scope.selectedStyle = 'apa';
             
     $scope.DEBUG = DEBUG;
     $scope.searchQuery = '';
@@ -104,21 +106,14 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
       $scope.datasets = datasets;
       $log.debug("Successful GET from /datasets!");
       angular.forEach($scope.datasets, function(dataset) {
-        // Retrieve the citation format for the dataset
-        if (_.includes(dataset._id, 'dx.doi.org')) {
-          $http({method: 'GET', url: dataset._id, headers: {'Accept' : 'text/x-bibliography; style=apa'} }).then(function successCallback(response) {
-            dataset.datacite = response.data;
-          }, function errorCallback(response) {
-            $log.error('Failed to retrieve trusted citation for: ' + dataset._id);
-            console.debug(response);
-          });
-        }
-        
-        // Retrieve the citation format for each of the dataset's publications
+        // Retrieve the citation format for the dataset and it's publications
         angular.forEach(dataset.publications, function(publication) {
           if (_.includes(publication.url, 'dx.doi.org')) {
-            $http({method: 'GET', url: publication.url, headers: {'Accept' : 'text/x-bibliography; style=apa'} }).then(function successCallback(response) {
+            $http({method: 'GET', url: publication.url, headers: {'Accept' : 'text/x-bibliography; style=' + $scope.selectedStyle} }).then(function successCallback(response) {
               publication.datacite = response.data;
+              if (publication.url === dataset._id) {
+                dataset.datacite = publication.datacite;
+              }
             }, function errorCallback(response) {
               $log.error('Failed to retrieve trusted citation for: ' + publication.url);
               console.debug(response);
