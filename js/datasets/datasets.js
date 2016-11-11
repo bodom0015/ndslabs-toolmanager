@@ -89,6 +89,12 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
  */
 .controller('DatasetsCtrl', [ '$log', '$scope', '$http', '$window','_',  'Datasets', 'Resolve', 'DEBUG',
       function($log, $scope, $http, $window, _, Datasets, Resolve, DEBUG) {
+       
+    // Enable popovers 
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    });
+            
     $scope.DEBUG = DEBUG;
     $scope.searchQuery = '';
     
