@@ -12,7 +12,7 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
 /**
  * Mock calls to API?
  */
-.constant('MOCK', true)
+.constant('MOCK', false)
 
 /**
  * Offer full metadata listing
