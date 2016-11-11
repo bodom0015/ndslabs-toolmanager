@@ -33,17 +33,17 @@
               <p>
                 <small>
                   <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-link btn-xs" data-toggle="modal" data-target="#datasetCitationModal">
+                  <button type="button" class="btn btn-link btn-xs" data-toggle="modal" data-target="#dataset{{$index}}CitationModal">
                     Cite Dataset
                   </button>
                   
                   <!-- Modal -->
-                  <div class="modal fade" id="datasetCitationModal" tabindex="-1" role="dialog" aria-labelledby="datasetCitationModalLabel">
+                  <div class="modal fade" id="dataset{{$index}}CitationModal" tabindex="-1" role="dialog" aria-labelledby="dataset{{$index}}CitationModalLabel">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <h4 class="modal-title" id="datasetCitationModalLabel">Dataset Citation</h4>
+                          <h4 class="modal-title" id="dataset{{$index}}CitationModalLabel">Dataset Citation</h4>
                         </div>
                         <div class="modal-body">
                           {{ dataset.datacite }}
