@@ -12,7 +12,7 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
 /**
  * Mock calls to API?
  */
-.constant('MOCK', false)
+.constant('MOCK', true)
 
 /**
  * Offer full metadata listing
@@ -84,21 +84,6 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
   };
 }])
 
-.filter('citation', [ function() {
-  return function(dataset) {
-      var citation = '';
-      // Append dataset label
-      if (dataset.label) {
-        citation += ', "' + dataset.label + '", ';
-      }
-      
-      // Append ID / DOI link
-      citation += dataset._id;
-      
-      return citation;
-  };
-}])
-
 /**
  * The controller for our "Datasets" view
  */
@@ -113,13 +98,23 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
       $scope.datasets = datasets;
       $log.debug("Successful GET from /datasets!");
       angular.forEach($scope.datasets, function(dataset) {
+        // Retrieve the citation format for the dataset
+        if (_.includes(dataset._id, 'dx.doi.org')) {
+          $http({method: 'GET', url: dataset._id, headers: {'Accept' : 'text/x-bibliography; style=apa'} }).then(function successCallback(response) {
+            dataset.datacite = response.data;
+          }, function errorCallback(response) {
+            $log.error('Failed to retrieve trusted citation for: ' + dataset._id);
+            console.debug(response);
+          });
+        }
+        
+        // Retrieve the citation format for each of the dataset's publications
         angular.forEach(dataset.publications, function(publication) {
-          var url = publication.url;
-          if (_.includes(url, 'dx.doi.org')) {
-            $http({method: 'GET', url: url, headers: {'Accept' : 'text/x-bibliography; style=apa'} }).then(function successCallback(response) {
+          if (_.includes(publication.url, 'dx.doi.org')) {
+            $http({method: 'GET', url: publication.url, headers: {'Accept' : 'text/x-bibliography; style=apa'} }).then(function successCallback(response) {
               publication.datacite = response.data;
             }, function errorCallback(response) {
-              $log.error('Failed to retrieve trusted citation for: ' + url);
+              $log.error('Failed to retrieve trusted citation for: ' + publication.url);
               console.debug(response);
             });
           }
@@ -130,6 +125,20 @@ angular.module('toolmgr.datasets', ['ngRoute', 'ngResource' ])
       $log.debug(response);
       console.debug(response);
     });
+    
+    $scope.citeDataset = function(dataset) {
+      var url = dataset._id;
+      if (!dataset.citation && _.includes(url, 'dx.doi.org')) {
+        return $http({method: 'GET', url: url, headers: {'Accept' : 'text/x-bibliography; style=apa'} }).then(function successCallback(response) {
+          dataset.citation = response.data;
+        }, function errorCallback(response) {
+          $log.error('Failed to retrieve trusted citation for: ' + url);
+          console.debug(response);
+        });
+      }
+      
+      return "";
+    };
     
     $scope.resolving = {};
     $scope.resolve = function(id, dataset) {

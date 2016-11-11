@@ -72,7 +72,7 @@
     }
   },
   {
-    "_id": "https://arxiv.org/abs/1407.2600",
+    "_id": "http://dx.doi.org/10.5281/zenodo.10777",
     "label": "Dark Sky Simulations",
     "landing_url" : "http://darksky.slac.stanford.edu/",
     "location" : "https://girder.hub.yt/static/built/plugins/ythub/extra/img/yt_logo.png",
